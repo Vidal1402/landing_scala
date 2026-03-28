@@ -3,34 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
   <title>United Scala</title>
   <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #eeeeee;
-      --card: #f7f7f7;
+      --bg: #070708;
+      --bg-mid: #0c0c0f;
+      --surface: #111116;
+      --card: #14141a;
+      --card-border: rgba(255, 255, 255, 0.08);
       --red: #c8192f;
-      --text: #222222;
-      --muted: #777777;
-      --field: #ebebeb;
+      --text: #f4f4f5;
+      --text-soft: rgba(244, 244, 245, 0.82);
+      --muted: #a1a1aa;
+      --field: #1a1a22;
+      --field-border: rgba(255, 255, 255, 0.1);
       --accent-lime: #e2ff00;
       --page-inline: 16px;
     }
 
     * { box-sizing: border-box; }
 
+    html {
+      font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
     body {
       margin: 0;
-      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+      font-family: inherit;
       background: var(--bg);
+      background-image:
+        radial-gradient(ellipse 120% 80% at 50% -40%, rgba(226, 255, 0, 0.07), transparent 55%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-mid) 45%, var(--bg) 100%);
       color: var(--text);
       min-height: 100vh;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
     .page {
       position: relative;
-      padding: 36px var(--page-inline) 40px;
+      padding: 36px var(--page-inline) 48px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -48,21 +65,24 @@
     .logo img {
       display: block;
       width: auto;
-      max-width: min(200px, 42vw);
-      height: clamp(28px, 4vw, 40px);
+      max-width: min(140px, 36vw);
+      height: clamp(36px, 5.2vw, 52px);
       object-fit: contain;
     }
 
     .card {
       width: min(950px, calc(100vw - 2 * var(--page-inline)));
-      border-radius: 12px;
-      border: 1px solid #dedede;
-      background: var(--card);
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.14);
-      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid var(--card-border);
+      background: linear-gradient(165deg, rgba(255, 255, 255, 0.04) 0%, transparent 42%), var(--card);
+      box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.35),
+        0 24px 56px rgba(0, 0, 0, 0.45),
+        0 0 80px rgba(226, 255, 0, 0.04);
+      padding: 22px;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 22px;
+      gap: clamp(20px, 3vw, 28px);
       position: relative;
       z-index: 2;
     }
@@ -70,8 +90,10 @@
     .hero-image {
       border-radius: 16px;
       overflow: hidden;
-      background: #1a1a1a;
+      background: #0d0d10;
       margin-bottom: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
     }
 
     .hero-image img {
@@ -83,28 +105,42 @@
     }
 
     .headline {
-      margin: 0 0 10px;
-      font-size: clamp(28px, 2.85vw, 50px);
-      line-height: 1.08;
-      letter-spacing: 0.2px;
-      font-weight: 300;
-      color: var(--text);
+      margin: 0 0 14px;
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      font-weight: 400;
     }
 
-    .headline strong {
-      color: var(--accent-lime);
+    /* Degradê vertical referência: topo cinza → base branco */
+    .headline__grad {
+      display: inline-block;
+      max-width: 100%;
+      font-size: clamp(40px, 5.8vw, 82px);
+      font-weight: 600;
+      line-height: 1.06;
+      background: linear-gradient(180deg, #a0a0a0 0%, #c4c4c4 35%, #efefef 70%, #ffffff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .headline__grad strong {
       font-weight: 800;
     }
 
     .desc {
       margin: 0;
       font-size: clamp(17px, 1.2vw, 23px);
-      line-height: 1.35;
+      line-height: 1.42;
       max-width: 95%;
-      color: #222;
+      color: var(--text-soft);
     }
 
-    .desc strong { font-weight: 800; }
+    .desc strong {
+      font-weight: 700;
+      color: var(--text);
+    }
 
     .mobile-extra {
       display: none;
@@ -142,20 +178,37 @@
     select,
     button {
       width: 100%;
-      border: 1px solid #e5e5e5;
-      border-radius: 7px;
+      border: 1px solid var(--field-border);
+      border-radius: 10px;
       background: var(--field);
-      color: #8f8f8f;
-      font-size: clamp(15px, 1vw, 18px);
+      color: var(--text-soft);
+      font-family: inherit;
+      font-size: clamp(15px, 1vw, 17px);
       height: 49px;
-      padding: 0 14px;
+      padding: 0 16px;
       outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input::placeholder {
+      color: var(--muted);
+      opacity: 1;
+    }
+
+    input:focus-visible,
+    select:focus-visible {
+      border-color: rgba(226, 255, 0, 0.45);
+      box-shadow: 0 0 0 3px rgba(226, 255, 0, 0.12);
     }
 
     select {
-      color: #5f5f5f;
+      color: var(--text-soft);
       appearance: none;
-      background-image: linear-gradient(45deg, transparent 50%, #888 50%), linear-gradient(135deg, #888 50%, transparent 50%);
+      cursor: pointer;
+      background-color: var(--field);
+      background-image:
+        linear-gradient(45deg, transparent 50%, #a1a1aa 50%),
+        linear-gradient(135deg, #a1a1aa 50%, transparent 50%);
       background-position: calc(100% - 18px) calc(1em + 2px), calc(100% - 12px) calc(1em + 2px);
       background-size: 6px 6px, 6px 6px;
       background-repeat: no-repeat;
@@ -164,14 +217,25 @@
 
     button {
       background: var(--accent-lime);
-      color: #000;
+      color: #0a0a0b;
       border: none;
-      font-weight: 700;
+      font-weight: 800;
       text-transform: uppercase;
+      letter-spacing: 0.06em;
       cursor: pointer;
       margin-top: auto;
       line-height: 1.2;
       padding: 0 14px;
+      border-radius: 10px;
+      transition: filter 0.2s ease, transform 0.15s ease;
+    }
+
+    button:hover {
+      filter: brightness(1.05);
+    }
+
+    button:active {
+      transform: scale(0.99);
     }
 
     /* Padrão igual ao referência (grade 3×3, 38px) — cores limão + preto transparente */
@@ -214,14 +278,16 @@
       .pixel { display: none; }
     }
 
-    /* Seção assessoria — fundo preto, duas colunas */
+    /* Seção assessoria — faixa escura contínua */
     .section-assessoria {
       width: 100%;
       box-sizing: border-box;
-      background: #000;
+      background: linear-gradient(180deg, #030304 0%, #0a0a0c 50%, #030304 100%);
       color: #fff;
       padding: clamp(56px, 7.5vw, 100px) clamp(20px, 5vw, 72px);
       margin: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     }
 
     .section-assessoria__inner {
@@ -235,17 +301,22 @@
 
     .section-assessoria__media {
       overflow: hidden;
-      border-radius: 12px;
-      max-width: 420px;
+      border-radius: 14px;
+      width: 100%;
+      max-width: 400px;
       margin: 0 auto;
+      aspect-ratio: 3 / 4;
+      max-height: min(560px, 78vh);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
     }
 
     .section-assessoria__media img {
       display: block;
       width: 100%;
-      height: auto;
-      object-fit: contain;
-      object-position: center;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 32%;
     }
 
     .section-assessoria__title {
@@ -262,7 +333,7 @@
       width: 100%;
       max-width: 100%;
       margin: clamp(16px, 2vw, 22px) 0 clamp(18px, 2.2vw, 26px);
-      background: linear-gradient(90deg, var(--accent-lime) 0%, rgba(255, 255, 255, 0.9) 52%, transparent 100%);
+      background: #e2ff00;
       border: 0;
     }
 
@@ -290,8 +361,8 @@
       }
 
       .logo img {
-        max-width: min(180px, 55vw);
-        height: clamp(24px, 7vw, 34px);
+        max-width: min(120px, 32vw);
+        height: clamp(32px, 9vw, 44px);
       }
 
       .card {
@@ -313,8 +384,11 @@
 
       .headline {
         text-align: center;
-        font-size: clamp(1.55rem, 6.2vw, 2.35rem);
         margin-bottom: 10px;
+      }
+
+      .headline__grad {
+        font-size: clamp(2rem, 8.2vw, 3.05rem);
       }
 
       .desc {
@@ -423,8 +497,8 @@
         padding: 16px;
       }
 
-      .headline {
-        font-size: clamp(1.5rem, 2.4vw, 2.5rem);
+      .headline__grad {
+        font-size: clamp(1.75rem, 3.4vw, 3rem);
       }
 
       .desc {
@@ -432,12 +506,13 @@
       }
     }
 
-    /* Torne-se dono — fundo escuro, texto + colagem */
+    /* Torne-se dono — faixa escura alinhada ao restante */
     .section-escritorios {
       width: 100%;
-      background: #111;
+      background: linear-gradient(180deg, #0a0a0d 0%, #111118 45%, #0a0a0d 100%);
       color: #fff;
       padding: clamp(44px, 7vw, 88px) clamp(18px, 5vw, 56px);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .section-escritorios__inner {
@@ -492,6 +567,10 @@
       height: clamp(54px, 7vw, 72px);
       margin: 0 auto 14px;
       color: var(--accent-lime);
+    }
+
+    .section-escritorios__icon text {
+      font-family: "Plus Jakarta Sans", sans-serif;
     }
 
     .section-escritorios__feature p {
@@ -609,6 +688,7 @@
       padding: clamp(48px, 8vw, 96px) clamp(18px, 4vw, 48px);
       position: relative;
       overflow: hidden;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .section-compare::before {
@@ -641,149 +721,118 @@
 
     .section-compare__subtitle {
       text-align: center;
-      margin: 0 auto clamp(36px, 5vw, 52px);
+      margin: 0 auto clamp(32px, 5vw, 48px);
       font-size: clamp(0.88rem, 1.35vw, 1rem);
       line-height: 1.5;
       color: rgba(255, 255, 255, 0.48);
       max-width: 36em;
     }
 
-    .section-compare__table-wrap {
-      border-radius: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.09);
-      overflow: hidden;
-      box-shadow:
-        0 28px 80px rgba(0, 0, 0, 0.55),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
-      background: rgba(255, 255, 255, 0.025);
-      backdrop-filter: blur(8px);
+    /* Duas colunas: Outras Agências (apagado) × United (destaque #e2ff00) */
+    .compare-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(18px, 3.5vw, 32px);
+      align-items: stretch;
+      max-width: 920px;
+      margin: 0 auto;
     }
 
-    .compare-grid {
+    .compare-cards__column {
+      min-width: 0;
       display: flex;
       flex-direction: column;
+      min-height: 0;
     }
 
-    .compare-grid__row {
-      display: grid;
-      grid-template-columns: minmax(0, 1.75fr) minmax(92px, 0.42fr) minmax(108px, 0.5fr);
-      align-items: stretch;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      transition: background 0.22s ease;
-    }
-
-    .compare-grid__row:last-child {
-      border-bottom: none;
-    }
-
-    .compare-grid__row:not(.compare-grid__row--head):hover {
-      background: rgba(226, 255, 0, 0.04);
-    }
-
-    .compare-grid__row:not(.compare-grid__row--head):hover .compare-grid__cell--ok {
-      filter: brightness(1.03);
-    }
-
-    .compare-grid__cell {
-      padding: clamp(14px, 2vw, 20px) clamp(14px, 2.2vw, 22px);
+    .compare-cards__label {
+      flex-shrink: 0;
+      margin: 0 0 clamp(12px, 2vw, 16px);
+      min-height: clamp(2.85rem, 7vw, 3.35rem);
       display: flex;
       align-items: center;
-    }
-
-    .compare-grid__row--head .compare-grid__cell {
-      padding-top: clamp(18px, 2.5vw, 26px);
-      padding-bottom: clamp(18px, 2.5vw, 26px);
-    }
-
-    .compare-grid__cell--corner {
-      background: #141414;
-      border-right: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .compare-grid__cell--h {
       justify-content: center;
       text-align: center;
-      font-size: 0.68rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
+      font-size: clamp(0.9rem, 1.65vw, 1.05rem);
+      font-weight: 600;
+      letter-spacing: 0.03em;
       color: rgba(255, 255, 255, 0.42);
-      background: #141414;
     }
 
-    .compare-grid__cell--h.compare-grid__cell--united-head {
+    .compare-cards__label--united {
+      margin: 0 0 clamp(12px, 2vw, 16px);
+      color: #fff;
+      font-weight: 800;
+      font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+      letter-spacing: 0.06em;
+    }
+
+    .compare-cards__panel {
+      flex: 1;
+      display: flex;
       flex-direction: column;
-      gap: 10px;
-      background: var(--accent-lime);
-      color: #111;
-      border-left: 1px solid rgba(0, 0, 0, 0.08);
-      letter-spacing: 0.1em;
+      min-height: 0;
+      border-radius: 18px;
+      padding: clamp(20px, 3.2vw, 28px);
+      border-width: 2px;
+      border-style: solid;
+      box-sizing: border-box;
     }
 
-    .compare-grid__cell--united-head img {
-      display: block;
-      width: auto;
-      max-width: 100%;
-      height: auto;
-      max-height: clamp(16px, 2.4vw, 22px);
-      object-fit: contain;
-      object-position: center;
-    }
-
-    .compare-grid__row:not(.compare-grid__row--head):nth-child(even) .compare-grid__cell--feat,
-    .compare-grid__row:not(.compare-grid__row--head):nth-child(even) .compare-grid__cell--x {
+    .compare-cards__panel--others {
       background: rgba(255, 255, 255, 0.035);
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
     }
 
-    .compare-grid__row:not(.compare-grid__row--head):nth-child(odd) .compare-grid__cell--feat,
-    .compare-grid__row:not(.compare-grid__row--head):nth-child(odd) .compare-grid__cell--x {
-      background: rgba(255, 255, 255, 0.02);
+    .compare-cards__panel--united {
+      background: rgba(10, 10, 12, 0.65);
+      border-color: #e2ff00;
+      box-shadow:
+        0 0 0 1px rgba(226, 255, 0, 0.12),
+        0 24px 56px rgba(0, 0, 0, 0.45);
     }
 
-    .compare-grid__cell--feat {
-      font-size: clamp(0.8rem, 1.15vw, 0.94rem);
-      line-height: 1.48;
-      color: rgba(255, 255, 255, 0.88);
-      border-right: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .compare-grid__cell--x {
-      justify-content: center;
-      border-right: 1px solid rgba(255, 255, 255, 0.05);
-      position: relative;
-    }
-
-    .compare-grid__cell--ok {
-      justify-content: center;
-      background: var(--accent-lime);
-      transition: filter 0.2s ease;
-      position: relative;
-    }
-
-    .compare-grid__icon {
-      width: clamp(22px, 3vw, 28px);
-      height: clamp(22px, 3vw, 28px);
-      flex-shrink: 0;
-    }
-
-    .compare-grid__icon--x {
-      color: rgba(255, 255, 255, 0.28);
-    }
-
-    .compare-grid__icon--check {
-      color: #111;
-    }
-
-    .compare-a11y {
-      position: absolute;
-      width: 1px;
-      height: 1px;
+    .compare-cards__list {
+      list-style: none;
+      margin: 0;
       padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(14px, 2.2vw, 20px);
+      flex: 1;
+    }
+
+    .compare-cards__item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: clamp(0.78rem, 1.12vw, 0.9rem);
+      line-height: 1.48;
+      font-weight: 500;
+    }
+
+    .compare-cards__panel--others .compare-cards__item {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .compare-cards__panel--united .compare-cards__item {
+      color: #f5f5f5;
+    }
+
+    .compare-cards__icon {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      margin-top: 3px;
+    }
+
+    .compare-cards__icon--x {
+      color: rgba(255, 255, 255, 0.32);
+    }
+
+    .compare-cards__icon--check {
+      color: #e2ff00;
     }
 
     @media (max-width: 720px) {
@@ -792,96 +841,30 @@
         padding-inline: clamp(4px, 1.5vw, 12px);
       }
 
-      .section-compare__table-wrap {
-        border-radius: 14px;
-        overflow-x: auto;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-        overscroll-behavior-x: contain;
-        scrollbar-color: rgba(226, 255, 0, 0.35) rgba(255, 255, 255, 0.06);
-        scrollbar-width: thin;
+      .compare-cards {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        max-width: 28rem;
       }
 
-      .section-compare__table-wrap::-webkit-scrollbar {
-        height: 5px;
+      .compare-cards__item {
+        font-size: clamp(0.85rem, 3.4vw, 0.95rem);
+        gap: 10px;
       }
 
-      .section-compare__table-wrap::-webkit-scrollbar-track {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 3px;
-      }
-
-      .section-compare__table-wrap::-webkit-scrollbar-thumb {
-        background: rgba(226, 255, 0, 0.45);
-        border-radius: 3px;
-      }
-
-      /* Uma única grelha alinhada: cabeçalho + linhas com as mesmas 3 colunas */
-      .compare-grid {
-        width: 100%;
-        min-width: 252px;
-      }
-
-      .compare-grid__row {
-        grid-template-columns: minmax(0, 1fr) 52px 58px;
-      }
-
-      .compare-grid__cell {
-        padding: 9px 8px;
-        min-width: 0;
-      }
-
-      .compare-grid__row--head .compare-grid__cell {
-        padding-top: 11px;
-        padding-bottom: 11px;
-      }
-
-      .compare-grid__cell--corner {
-        padding: 6px 2px;
-      }
-
-      .compare-grid__cell--h {
-        font-size: 0.5rem;
-        letter-spacing: 0.08em;
-        padding-inline: 4px;
-        line-height: 1.2;
-      }
-
-      .compare-grid__cell--h.compare-grid__cell--united-head {
-        gap: 4px;
-        padding-inline: 6px;
-      }
-
-      .compare-grid__cell--united-head img {
-        max-height: min(16px, 4.2vw);
-        max-width: 100%;
-      }
-
-      .compare-grid__cell--feat {
-        font-size: 0.72rem;
-        line-height: 1.38;
-        hyphens: auto;
-        overflow-wrap: anywhere;
-        word-break: break-word;
-      }
-
-      .compare-grid__cell--x,
-      .compare-grid__cell--ok {
-        padding-inline: 4px;
-      }
-
-      .compare-grid__icon {
-        width: 18px;
-        height: 18px;
+      .compare-cards__panel {
+        padding: clamp(18px, 4vw, 22px);
+        border-radius: 16px;
       }
     }
 
-    /* Números / prova social — fundo branco + arte +500M (no lugar do bloco visual original) */
+    /* Números / prova social — tema escuro + arte +500M */
     .section-social-proof {
       width: 100%;
-      background: #fff;
-      color: #111;
-      padding: clamp(40px, 6vw, 72px) clamp(18px, 4vw, 48px);
+      background: linear-gradient(180deg, var(--bg-mid) 0%, var(--surface) 40%, var(--bg-mid) 100%);
+      color: var(--text);
+      padding: clamp(48px, 7vw, 88px) clamp(18px, 4vw, 48px);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
     }
 
     .section-social-proof__hero-img {
@@ -892,6 +875,7 @@
       margin: 0;
       opacity: 1;
       -webkit-font-smoothing: antialiased;
+      filter: drop-shadow(0 12px 32px rgba(0, 0, 0, 0.35));
     }
 
     .section-social-proof__inner {
@@ -910,11 +894,11 @@
     .section-social-proof__title {
       margin: 0 0 14px;
       font-size: clamp(1.1rem, 1.85vw, 1.42rem);
-      font-weight: 600;
+      font-weight: 700;
       line-height: 1.32;
+      letter-spacing: -0.02em;
       max-width: 22em;
-      color: #111;
-      opacity: 1;
+      color: var(--text);
     }
 
     .section-social-proof__rule {
@@ -922,13 +906,12 @@
       height: 3px;
       margin: 0 0 22px;
       border: 0;
-      background: linear-gradient(90deg, var(--accent-lime) 0%, var(--accent-lime) 42%, #1a1a1a 42%, #1a1a1a 100%);
+      background: #e2ff00;
     }
 
     .section-social-proof__visual {
       margin-top: 4px;
     }
-
 
     .section-social-proof__stats {
       display: grid;
@@ -951,7 +934,7 @@
 
     .social-stat__line {
       height: 1px;
-      background: #ccc;
+      background: rgba(255, 255, 255, 0.12);
       margin: 12px 0 12px;
       max-width: 100%;
     }
@@ -960,9 +943,8 @@
       margin: 0;
       font-size: clamp(0.82rem, 1.2vw, 0.95rem);
       line-height: 1.45;
-      color: #222;
+      color: var(--text-soft);
       font-weight: 400;
-      opacity: 1;
     }
 
     .section-social-proof__cta-wrap {
@@ -975,21 +957,22 @@
     .section-social-proof__btn {
       display: inline-block;
       background: var(--accent-lime);
-      color: #000;
+      color: #0a0a0b;
       border: none;
-      font-weight: 700;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.07em;
-      padding: 7px 18px;
-      font-size: 0.6875rem;
+      letter-spacing: 0.08em;
+      padding: 10px 22px;
+      font-size: 0.7rem;
       line-height: 1.25;
       cursor: pointer;
-      border-radius: 3px;
+      border-radius: 10px;
       font-family: inherit;
+      transition: filter 0.2s ease;
     }
 
     .section-social-proof__btn:hover {
-      filter: brightness(0.97);
+      filter: brightness(1.06);
     }
 
     @media (max-width: 900px) {
@@ -1108,7 +1091,7 @@
     </div>
 
     <header class="logo">
-      <img src="assets/logo-united.png" alt="United">
+      <img src="assets/logo-united-flag.png" alt="United">
     </header>
 
     <section class="card">
@@ -1116,7 +1099,7 @@
         <div class="hero-image">
           <img src="assets/hero-office.png" alt="Escritório United">
         </div>
-        <h1 class="headline"><strong>Seja dono</strong> de um escritório <strong>United</strong></h1>
+        <h1 class="headline"><span class="headline__grad"><strong>Seja dono</strong> de um escritório <strong>United</strong></span></h1>
         <p class="desc">E se torne um sócio-executivo da <strong>marca que domina o setor mais promissor do mercado.</strong></p>
         <p class="mobile-extra"><strong>Cadastre-se</strong> e conheça a proposta da United</p>
         <span class="star" aria-hidden="true">✹</span>
@@ -1148,7 +1131,7 @@
   <section class="section-assessoria" aria-labelledby="assessoria-heading">
     <div class="section-assessoria__inner">
       <div class="section-assessoria__media">
-        <img src="assets/section-assessoria.png" alt="Retrato profissional United Market">
+        <img src="assets/section-assessoria.png" alt="Interior do escritório Agência United: ambiente moderno com iluminação e identidade visual da marca.">
       </div>
       <div class="section-assessoria__copy">
         <h2 id="assessoria-heading" class="section-assessoria__title">A maior Assessoria de Marketing do Brasil está selecionando novos sócios-executivos</h2>
@@ -1253,91 +1236,75 @@
     <div class="section-compare__inner">
       <h2 id="compare-heading" class="section-compare__title">Por que a United e não outra franquia?</h2>
       <p class="section-compare__subtitle">Veja o que você leva na prática ao lado de uma agência comum — e por que nosso modelo foi pensado para quem quer escalar com segurança.</p>
-      <div class="section-compare__table-wrap">
-        <div class="compare-grid" role="table" aria-label="Comparativo entre agências comuns e a franquia United">
-          <div class="compare-grid__row compare-grid__row--head" role="row">
-            <div class="compare-grid__cell compare-grid__cell--corner" role="columnheader"><span class="compare-a11y">Critério</span></div>
-            <div class="compare-grid__cell compare-grid__cell--h" role="columnheader">Agências</div>
-            <div class="compare-grid__cell compare-grid__cell--h compare-grid__cell--united-head" role="columnheader">
-              <img src="assets/logo-united.png" alt="United">
-            </div>
+      <div class="compare-cards" role="region" aria-label="Comparativo entre outras agências e a United">
+        <div class="compare-cards__column">
+          <p class="compare-cards__label">Outras Agências</p>
+          <div class="compare-cards__panel compare-cards__panel--others">
+            <ul class="compare-cards__list">
+              <li class="compare-cards__item">
+                <svg class="compare-cards__icon compare-cards__icon--x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-x"/></svg>
+                <span>Suporte na tratativa com clientes, consultoria trabalhista, e até implementação de diretrizes do compliance.</span>
+              </li>
+              <li class="compare-cards__item">
+                <svg class="compare-cards__icon compare-cards__icon--x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-x"/></svg>
+                <span>Temos soluções que nenhuma outra empresa de marketing tem.</span>
+              </li>
+              <li class="compare-cards__item">
+                <svg class="compare-cards__icon compare-cards__icon--x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-x"/></svg>
+                <span>Traz oportunidades até você.</span>
+              </li>
+              <li class="compare-cards__item">
+                <svg class="compare-cards__icon compare-cards__icon--x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-x"/></svg>
+                <span>Tem formação própria para qualificar a rede e trazer mais pessoas qualificadas.</span>
+              </li>
+              <li class="compare-cards__item">
+                <svg class="compare-cards__icon compare-cards__icon--x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-x"/></svg>
+                <span>Ajudar você no processo de contratação.</span>
+              </li>
+              <li class="compare-cards__item">
+                <svg class="compare-cards__icon compare-cards__icon--x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-x"/></svg>
+                <span>Influência no Instagram com milhões de visualizações nos anúncios.</span>
+              </li>
+              <li class="compare-cards__item">
+                <svg class="compare-cards__icon compare-cards__icon--x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-x"/></svg>
+                <span>Auxilia no processo de cobrança, emissão de boletos, gestão financeira e controle de inadimplência.</span>
+              </li>
+            </ul>
           </div>
-          <div class="compare-grid__row" role="row">
-            <div class="compare-grid__cell compare-grid__cell--feat" role="rowheader">Suporte na tratativa com clientes, consultoria trabalhista, e até implementação de diretrizes do compliance.</div>
-            <div class="compare-grid__cell compare-grid__cell--x" role="cell">
-              <span class="compare-a11y">Agências: não oferece</span>
-              <svg class="compare-grid__icon compare-grid__icon--x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-x"/></svg>
-            </div>
-            <div class="compare-grid__cell compare-grid__cell--ok" role="cell">
-              <span class="compare-a11y">United: oferece</span>
-              <svg class="compare-grid__icon compare-grid__icon--check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-check"/></svg>
-            </div>
-          </div>
-          <div class="compare-grid__row" role="row">
-            <div class="compare-grid__cell compare-grid__cell--feat" role="rowheader">Temos soluções que nenhuma outra empresa de marketing tem.</div>
-            <div class="compare-grid__cell compare-grid__cell--x" role="cell">
-              <span class="compare-a11y">Agências: não oferece</span>
-              <svg class="compare-grid__icon compare-grid__icon--x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-x"/></svg>
-            </div>
-            <div class="compare-grid__cell compare-grid__cell--ok" role="cell">
-              <span class="compare-a11y">United: oferece</span>
-              <svg class="compare-grid__icon compare-grid__icon--check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-check"/></svg>
-            </div>
-          </div>
-          <div class="compare-grid__row" role="row">
-            <div class="compare-grid__cell compare-grid__cell--feat" role="rowheader">Traz oportunidades até você.</div>
-            <div class="compare-grid__cell compare-grid__cell--x" role="cell">
-              <span class="compare-a11y">Agências: não oferece</span>
-              <svg class="compare-grid__icon compare-grid__icon--x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-x"/></svg>
-            </div>
-            <div class="compare-grid__cell compare-grid__cell--ok" role="cell">
-              <span class="compare-a11y">United: oferece</span>
-              <svg class="compare-grid__icon compare-grid__icon--check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-check"/></svg>
-            </div>
-          </div>
-          <div class="compare-grid__row" role="row">
-            <div class="compare-grid__cell compare-grid__cell--feat" role="rowheader">Tem formação própria para qualificar a rede e trazer mais pessoas qualificadas.</div>
-            <div class="compare-grid__cell compare-grid__cell--x" role="cell">
-              <span class="compare-a11y">Agências: não oferece</span>
-              <svg class="compare-grid__icon compare-grid__icon--x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-x"/></svg>
-            </div>
-            <div class="compare-grid__cell compare-grid__cell--ok" role="cell">
-              <span class="compare-a11y">United: oferece</span>
-              <svg class="compare-grid__icon compare-grid__icon--check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-check"/></svg>
-            </div>
-          </div>
-          <div class="compare-grid__row" role="row">
-            <div class="compare-grid__cell compare-grid__cell--feat" role="rowheader">Ajudar você no processo de contratação.</div>
-            <div class="compare-grid__cell compare-grid__cell--x" role="cell">
-              <span class="compare-a11y">Agências: não oferece</span>
-              <svg class="compare-grid__icon compare-grid__icon--x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-x"/></svg>
-            </div>
-            <div class="compare-grid__cell compare-grid__cell--ok" role="cell">
-              <span class="compare-a11y">United: oferece</span>
-              <svg class="compare-grid__icon compare-grid__icon--check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-check"/></svg>
-            </div>
-          </div>
-          <div class="compare-grid__row" role="row">
-            <div class="compare-grid__cell compare-grid__cell--feat" role="rowheader">Influência no Instagram com milhões de visualizações nos anúncios.</div>
-            <div class="compare-grid__cell compare-grid__cell--x" role="cell">
-              <span class="compare-a11y">Agências: não oferece</span>
-              <svg class="compare-grid__icon compare-grid__icon--x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-x"/></svg>
-            </div>
-            <div class="compare-grid__cell compare-grid__cell--ok" role="cell">
-              <span class="compare-a11y">United: oferece</span>
-              <svg class="compare-grid__icon compare-grid__icon--check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-check"/></svg>
-            </div>
-          </div>
-          <div class="compare-grid__row" role="row">
-            <div class="compare-grid__cell compare-grid__cell--feat" role="rowheader">Auxilia no processo de cobrança, emissão de boletos, gestão financeira e controle de inadimplência.</div>
-            <div class="compare-grid__cell compare-grid__cell--x" role="cell">
-              <span class="compare-a11y">Agências: não oferece</span>
-              <svg class="compare-grid__icon compare-grid__icon--x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-x"/></svg>
-            </div>
-            <div class="compare-grid__cell compare-grid__cell--ok" role="cell">
-              <span class="compare-a11y">United: oferece</span>
-              <svg class="compare-grid__icon compare-grid__icon--check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-check"/></svg>
-            </div>
+        </div>
+        <div class="compare-cards__column">
+          <p class="compare-cards__label compare-cards__label--united">united</p>
+          <div class="compare-cards__panel compare-cards__panel--united">
+            <ul class="compare-cards__list">
+              <li class="compare-cards__item">
+                <svg class="compare-cards__icon compare-cards__icon--check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-check"/></svg>
+                <span>Suporte na tratativa com clientes, consultoria trabalhista, e até implementação de diretrizes do compliance.</span>
+              </li>
+              <li class="compare-cards__item">
+                <svg class="compare-cards__icon compare-cards__icon--check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-check"/></svg>
+                <span>Temos soluções que nenhuma outra empresa de marketing tem.</span>
+              </li>
+              <li class="compare-cards__item">
+                <svg class="compare-cards__icon compare-cards__icon--check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-check"/></svg>
+                <span>Traz oportunidades até você.</span>
+              </li>
+              <li class="compare-cards__item">
+                <svg class="compare-cards__icon compare-cards__icon--check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-check"/></svg>
+                <span>Tem formação própria para qualificar a rede e trazer mais pessoas qualificadas.</span>
+              </li>
+              <li class="compare-cards__item">
+                <svg class="compare-cards__icon compare-cards__icon--check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-check"/></svg>
+                <span>Ajudar você no processo de contratação.</span>
+              </li>
+              <li class="compare-cards__item">
+                <svg class="compare-cards__icon compare-cards__icon--check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-check"/></svg>
+                <span>Influência no Instagram com milhões de visualizações nos anúncios.</span>
+              </li>
+              <li class="compare-cards__item">
+                <svg class="compare-cards__icon compare-cards__icon--check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-check"/></svg>
+                <span>Auxilia no processo de cobrança, emissão de boletos, gestão financeira e controle de inadimplência.</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
