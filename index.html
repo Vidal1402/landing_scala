@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Landing United</title>
+  <title>United Scala</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
   <style>
     :root {
       --bg: #eeeeee;
@@ -47,7 +48,9 @@
     .logo img {
       display: block;
       width: auto;
-      height: clamp(36px, 5vw, 52px);
+      max-width: min(200px, 42vw);
+      height: clamp(28px, 4vw, 40px);
+      object-fit: contain;
     }
 
     .card {
@@ -287,7 +290,8 @@
       }
 
       .logo img {
-        height: clamp(30px, 8vw, 44px);
+        max-width: min(180px, 55vw);
+        height: clamp(24px, 7vw, 34px);
       }
 
       .card {
@@ -718,13 +722,12 @@
 
     .compare-grid__cell--united-head img {
       display: block;
-      height: clamp(24px, 3.2vw, 32px);
       width: auto;
-    }
-
-    .compare-grid__cell--united-head span {
-      font-size: 0.72rem;
-      font-weight: 800;
+      max-width: 100%;
+      height: auto;
+      max-height: clamp(16px, 2.4vw, 22px);
+      object-fit: contain;
+      object-position: center;
     }
 
     .compare-grid__row:not(.compare-grid__row--head):nth-child(even) .compare-grid__cell--feat,
@@ -784,83 +787,92 @@
     }
 
     @media (max-width: 720px) {
-      .compare-grid__row--head {
-        display: none;
+      .section-compare__title,
+      .section-compare__subtitle {
+        padding-inline: clamp(4px, 1.5vw, 12px);
       }
 
       .section-compare__table-wrap {
-        background: transparent;
-        border: none;
-        box-shadow: none;
-        backdrop-filter: none;
-        border-radius: 0;
-        overflow: visible;
+        border-radius: 14px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-x: contain;
+        scrollbar-color: rgba(226, 255, 0, 0.35) rgba(255, 255, 255, 0.06);
+        scrollbar-width: thin;
       }
 
+      .section-compare__table-wrap::-webkit-scrollbar {
+        height: 5px;
+      }
+
+      .section-compare__table-wrap::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 3px;
+      }
+
+      .section-compare__table-wrap::-webkit-scrollbar-thumb {
+        background: rgba(226, 255, 0, 0.45);
+        border-radius: 3px;
+      }
+
+      /* Uma única grelha alinhada: cabeçalho + linhas com as mesmas 3 colunas */
       .compare-grid {
-        gap: 12px;
+        width: 100%;
+        min-width: 252px;
       }
 
-      .compare-grid__row:not(.compare-grid__row--head) {
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto minmax(88px, auto);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
-        overflow: hidden;
-        background: rgba(255, 255, 255, 0.04);
-        border-bottom: none;
+      .compare-grid__row {
+        grid-template-columns: minmax(0, 1fr) 52px 58px;
       }
 
-      .compare-grid__row:not(.compare-grid__row--head):hover {
-        background: rgba(255, 255, 255, 0.06);
+      .compare-grid__cell {
+        padding: 9px 8px;
+        min-width: 0;
+      }
+
+      .compare-grid__row--head .compare-grid__cell {
+        padding-top: 11px;
+        padding-bottom: 11px;
+      }
+
+      .compare-grid__cell--corner {
+        padding: 6px 2px;
+      }
+
+      .compare-grid__cell--h {
+        font-size: 0.5rem;
+        letter-spacing: 0.08em;
+        padding-inline: 4px;
+        line-height: 1.2;
+      }
+
+      .compare-grid__cell--h.compare-grid__cell--united-head {
+        gap: 4px;
+        padding-inline: 6px;
+      }
+
+      .compare-grid__cell--united-head img {
+        max-height: min(16px, 4.2vw);
+        max-width: 100%;
       }
 
       .compare-grid__cell--feat {
-        grid-column: 1 / -1;
-        border-right: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        font-size: clamp(0.88rem, 3.5vw, 0.98rem);
+        font-size: 0.72rem;
+        line-height: 1.38;
+        hyphens: auto;
+        overflow-wrap: anywhere;
+        word-break: break-word;
       }
 
       .compare-grid__cell--x,
       .compare-grid__cell--ok {
-        flex-direction: column;
-        justify-content: center;
-        gap: 10px;
-        padding: 16px 12px;
+        padding-inline: 4px;
       }
 
-      .compare-grid__cell--x::before {
-        content: "Agências";
-        font-size: 0.62rem;
-        font-weight: 800;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.38);
-      }
-
-      .compare-grid__cell--ok::before {
-        content: "United";
-        font-size: 0.62rem;
-        font-weight: 800;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: rgba(0, 0, 0, 0.5);
-      }
-
-      .compare-grid__cell--x {
-        background: rgba(0, 0, 0, 0.35);
-        border-right: 1px solid rgba(255, 255, 255, 0.06);
-      }
-
-      .compare-grid__row:not(.compare-grid__row--head):nth-child(even) .compare-grid__cell--feat,
-      .compare-grid__row:not(.compare-grid__row--head):nth-child(odd) .compare-grid__cell--feat {
-        background: transparent;
-      }
-
-      .compare-grid__row:not(.compare-grid__row--head):nth-child(even) .compare-grid__cell--x,
-      .compare-grid__row:not(.compare-grid__row--head):nth-child(odd) .compare-grid__cell--x {
-        background: rgba(0, 0, 0, 0.35);
+      .compare-grid__icon {
+        width: 18px;
+        height: 18px;
       }
     }
 
@@ -1247,8 +1259,7 @@
             <div class="compare-grid__cell compare-grid__cell--corner" role="columnheader"><span class="compare-a11y">Critério</span></div>
             <div class="compare-grid__cell compare-grid__cell--h" role="columnheader">Agências</div>
             <div class="compare-grid__cell compare-grid__cell--h compare-grid__cell--united-head" role="columnheader">
-              <img src="assets/logo-united.png" alt="">
-              <span>United</span>
+              <img src="assets/logo-united.png" alt="United">
             </div>
           </div>
           <div class="compare-grid__row" role="row">
