@@ -1,0 +1,1336 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landing United</title>
+  <style>
+    :root {
+      --bg: #eeeeee;
+      --card: #f7f7f7;
+      --red: #c8192f;
+      --text: #222222;
+      --muted: #777777;
+      --field: #ebebeb;
+      --accent-lime: #e2ff00;
+      --page-inline: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .page {
+      position: relative;
+      padding: 36px var(--page-inline) 40px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .logo {
+      margin: 8px 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+
+    .logo img {
+      display: block;
+      width: auto;
+      height: clamp(36px, 5vw, 52px);
+    }
+
+    .card {
+      width: min(950px, calc(100vw - 2 * var(--page-inline)));
+      border-radius: 12px;
+      border: 1px solid #dedede;
+      background: var(--card);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.14);
+      padding: 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-image {
+      border-radius: 16px;
+      overflow: hidden;
+      background: #1a1a1a;
+      margin-bottom: 14px;
+    }
+
+    .hero-image img {
+      display: block;
+      width: 100%;
+      height: clamp(200px, 28vw, 248px);
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .headline {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 2.85vw, 50px);
+      line-height: 1.08;
+      letter-spacing: 0.2px;
+      font-weight: 300;
+      color: var(--text);
+    }
+
+    .headline strong {
+      color: var(--accent-lime);
+      font-weight: 800;
+    }
+
+    .desc {
+      margin: 0;
+      font-size: clamp(17px, 1.2vw, 23px);
+      line-height: 1.35;
+      max-width: 95%;
+      color: #222;
+    }
+
+    .desc strong { font-weight: 800; }
+
+    .mobile-extra {
+      display: none;
+      margin-top: 20px;
+      text-align: center;
+      font-size: 22px;
+      color: var(--text);
+      line-height: 1.25;
+    }
+
+    .mobile-extra strong { color: var(--accent-lime); }
+
+    .star {
+      display: none;
+      margin: 12px auto 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--accent-lime);
+      color: #111;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      line-height: 1;
+    }
+
+    .right form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      height: 100%;
+    }
+
+    input,
+    select,
+    button {
+      width: 100%;
+      border: 1px solid #e5e5e5;
+      border-radius: 7px;
+      background: var(--field);
+      color: #8f8f8f;
+      font-size: clamp(15px, 1vw, 18px);
+      height: 49px;
+      padding: 0 14px;
+      outline: none;
+    }
+
+    select {
+      color: #5f5f5f;
+      appearance: none;
+      background-image: linear-gradient(45deg, transparent 50%, #888 50%), linear-gradient(135deg, #888 50%, transparent 50%);
+      background-position: calc(100% - 18px) calc(1em + 2px), calc(100% - 12px) calc(1em + 2px);
+      background-size: 6px 6px, 6px 6px;
+      background-repeat: no-repeat;
+      padding-right: 34px;
+    }
+
+    button {
+      background: var(--accent-lime);
+      color: #000;
+      border: none;
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-top: auto;
+      line-height: 1.2;
+      padding: 0 14px;
+    }
+
+    /* Padrão igual ao referência (grade 3×3, 38px) — cores limão + preto transparente */
+    .pixel {
+      position: absolute;
+      display: grid;
+      grid-template-columns: repeat(3, 38px);
+      grid-auto-rows: 38px;
+      gap: 0;
+      opacity: 0.9;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .pixel span {
+      display: block;
+      background: var(--accent-lime);
+    }
+
+    .pixel span.fade {
+      background: rgba(0, 0, 0, 0.22);
+      opacity: 1;
+      filter: blur(0.5px);
+    }
+
+    .pixel span.medium {
+      background: var(--accent-lime);
+      opacity: 1;
+    }
+
+    .pixel span.empty {
+      background: rgba(0, 0, 0, 0.14);
+    }
+
+    .pixel.left { left: clamp(12px, 8vw, 118px); bottom: 48px; }
+    .pixel.right { right: clamp(12px, 8vw, 125px); top: 68px; transform: scale(0.93); }
+    .pixel.right-2 { right: clamp(12px, 14vw, 220px); bottom: 104px; transform: scale(0.82); }
+
+    @media (max-width: 1200px) {
+      .pixel { display: none; }
+    }
+
+    /* Seção assessoria — fundo preto, duas colunas */
+    .section-assessoria {
+      width: 100%;
+      box-sizing: border-box;
+      background: #000;
+      color: #fff;
+      padding: clamp(56px, 7.5vw, 100px) clamp(20px, 5vw, 72px);
+      margin: 0;
+    }
+
+    .section-assessoria__inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(36px, 5vw, 64px);
+      align-items: center;
+    }
+
+    .section-assessoria__media {
+      overflow: hidden;
+      border-radius: 12px;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    .section-assessoria__media img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      object-position: center;
+    }
+
+    .section-assessoria__title {
+      margin: 0;
+      font-size: clamp(1.35rem, 2.4vw, 2.05rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: 0.02em;
+      color: #fff;
+    }
+
+    .section-assessoria__rule {
+      height: 2px;
+      width: 100%;
+      max-width: 100%;
+      margin: clamp(16px, 2vw, 22px) 0 clamp(18px, 2.2vw, 26px);
+      background: linear-gradient(90deg, var(--accent-lime) 0%, rgba(255, 255, 255, 0.9) 52%, transparent 100%);
+      border: 0;
+    }
+
+    .section-assessoria__body {
+      margin: 0;
+      font-size: clamp(0.95rem, 1.35vw, 1.125rem);
+      line-height: 1.5;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.92);
+      max-width: 38em;
+    }
+
+    /* Tablet / mobile: card em coluna única, tipografia fluida */
+    @media (max-width: 960px) {
+      :root {
+        --page-inline: 14px;
+      }
+
+      .page {
+        padding: 28px var(--page-inline) 32px;
+      }
+
+      .logo {
+        margin: 0 0 20px;
+      }
+
+      .logo img {
+        height: clamp(30px, 8vw, 44px);
+      }
+
+      .card {
+        width: min(950px, calc(100vw - 2 * var(--page-inline)));
+        grid-template-columns: 1fr;
+        gap: 0;
+        padding: 16px 14px 14px;
+        border-radius: 16px;
+      }
+
+      .hero-image {
+        border-radius: 14px;
+        margin-bottom: 14px;
+      }
+
+      .hero-image img {
+        height: clamp(168px, 46vw, 240px);
+      }
+
+      .headline {
+        text-align: center;
+        font-size: clamp(1.55rem, 6.2vw, 2.35rem);
+        margin-bottom: 10px;
+      }
+
+      .desc {
+        text-align: center;
+        font-size: clamp(1.05rem, 4.4vw, 1.28rem);
+        line-height: 1.45;
+        max-width: 100%;
+      }
+
+      .mobile-extra {
+        display: block;
+        font-size: clamp(1rem, 4.1vw, 1.18rem);
+        margin-top: 16px;
+      }
+
+      .star { display: flex; }
+
+      .right {
+        margin-top: 12px;
+      }
+
+      .right form {
+        min-height: 0;
+      }
+
+      input,
+      select {
+        height: 48px;
+        font-size: max(16px, 1.05rem);
+      }
+
+      button {
+        margin-top: 10px;
+        min-height: 48px;
+        height: auto;
+        padding: 12px 14px;
+        font-size: clamp(0.8125rem, 3.1vw, 0.9375rem);
+        white-space: normal;
+      }
+
+      .section-assessoria {
+        padding: clamp(40px, 10vw, 52px) var(--page-inline) clamp(44px, 10vw, 56px);
+      }
+
+      .section-assessoria__inner {
+        grid-template-columns: 1fr;
+        gap: clamp(24px, 6vw, 36px);
+      }
+
+      .section-assessoria__copy {
+        text-align: center;
+        max-width: 36rem;
+        margin: 0 auto;
+      }
+
+      .section-assessoria__body {
+        margin-left: auto;
+        margin-right: auto;
+        font-size: clamp(1.02rem, 4vw, 1.2rem);
+      }
+
+      .section-assessoria__media {
+        max-width: min(100%, 400px);
+      }
+
+      .section-assessoria__title {
+        font-size: clamp(1.32rem, 5.4vw, 1.9rem);
+      }
+
+      .section-escritorios__title {
+        font-size: clamp(1.4rem, 5.5vw, 2rem);
+      }
+
+      .section-escritorios__lead {
+        font-size: clamp(1.02rem, 4vw, 1.18rem);
+      }
+
+      .section-escritorios__feature p {
+        font-size: clamp(1.12rem, 4.8vw, 1.38rem);
+      }
+
+      .section-escritorios__icon {
+        width: clamp(64px, 16vw, 88px);
+        height: clamp(64px, 16vw, 88px);
+        margin-bottom: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      :root {
+        --page-inline: 12px;
+      }
+
+      .page {
+        padding: 22px var(--page-inline) 28px;
+      }
+
+      .card {
+        padding: 14px 12px 12px;
+      }
+    }
+
+    @media (min-width: 961px) and (max-width: 1100px) {
+      .card {
+        gap: 18px;
+        padding: 16px;
+      }
+
+      .headline {
+        font-size: clamp(1.5rem, 2.4vw, 2.5rem);
+      }
+
+      .desc {
+        font-size: clamp(0.95rem, 1.15vw, 1.15rem);
+      }
+    }
+
+    /* Torne-se dono — fundo escuro, texto + colagem */
+    .section-escritorios {
+      width: 100%;
+      background: #111;
+      color: #fff;
+      padding: clamp(44px, 7vw, 88px) clamp(18px, 5vw, 56px);
+    }
+
+    .section-escritorios__inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      gap: clamp(28px, 5vw, 56px);
+      align-items: center;
+    }
+
+    .section-escritorios__title {
+      margin: 0 0 14px;
+      font-size: clamp(1.45rem, 3.1vw, 2.35rem);
+      font-weight: 700;
+      line-height: 1.18;
+      letter-spacing: 0.02em;
+    }
+
+    .section-escritorios__rule {
+      width: 52px;
+      height: 3px;
+      background: var(--accent-lime);
+      margin: 0 0 18px;
+      border: 0;
+    }
+
+    .section-escritorios__lead {
+      margin: 0 0 clamp(24px, 4vw, 36px);
+      font-size: clamp(0.92rem, 1.35vw, 1.08rem);
+      line-height: 1.55;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 36em;
+    }
+
+    .section-escritorios__features {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(18px, 3vw, 28px);
+    }
+
+    .section-escritorios__feature {
+      text-align: center;
+    }
+
+    .section-escritorios__icon {
+      display: block;
+      width: clamp(54px, 7vw, 72px);
+      height: clamp(54px, 7vw, 72px);
+      margin: 0 auto 14px;
+      color: var(--accent-lime);
+    }
+
+    .section-escritorios__feature p {
+      margin: 0;
+      font-size: clamp(0.9rem, 1.55vw, 1.08rem);
+      line-height: 1.4;
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    .section-escritorios__feature strong {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .section-escritorios__collage {
+      position: relative;
+      width: 100%;
+      max-width: 540px;
+      margin: 0 auto;
+      min-height: clamp(300px, 42vw, 440px);
+      aspect-ratio: 1 / 1.05;
+    }
+
+    .section-escritorios__deco {
+      position: absolute;
+      z-index: 0;
+      border-radius: 2px;
+    }
+
+    .section-escritorios__deco--a {
+      width: 28%;
+      height: 22%;
+      background: var(--accent-lime);
+      left: 4%;
+      top: 18%;
+    }
+
+    .section-escritorios__deco--b {
+      width: 20%;
+      height: 16%;
+      background: #fff;
+      right: 8%;
+      top: 8%;
+    }
+
+    .section-escritorios__deco--c {
+      width: 24%;
+      height: 18%;
+      background: var(--accent-lime);
+      right: 12%;
+      bottom: 28%;
+      opacity: 0.9;
+    }
+
+    .section-escritorios__photo {
+      position: absolute;
+      object-fit: cover;
+      border-radius: 3px;
+      filter: grayscale(1);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
+
+    .section-escritorios__photo--1 {
+      width: 42%;
+      height: 58%;
+      left: 6%;
+      top: 10%;
+      transform: rotate(-5deg);
+      z-index: 2;
+    }
+
+    .section-escritorios__photo--2 {
+      width: 46%;
+      height: 62%;
+      right: 4%;
+      top: 2%;
+      transform: rotate(4deg);
+      z-index: 3;
+    }
+
+    .section-escritorios__photo--3 {
+      width: 44%;
+      height: 56%;
+      left: 24%;
+      bottom: 4%;
+      transform: rotate(-2deg);
+      z-index: 4;
+    }
+
+    .section-escritorios__arrow-box {
+      position: absolute;
+      left: 0;
+      bottom: 8%;
+      width: clamp(44px, 7vw, 56px);
+      height: clamp(44px, 7vw, 56px);
+      background: var(--accent-lime);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+    }
+
+    .section-escritorios__arrow-box svg {
+      width: 55%;
+      height: 55%;
+      color: #111;
+    }
+
+    /* Comparativo United × agências */
+    .section-compare {
+      width: 100%;
+      background: linear-gradient(165deg, #080808 0%, #121212 42%, #0c0c0c 100%);
+      color: #f0f0f0;
+      padding: clamp(48px, 8vw, 96px) clamp(18px, 4vw, 48px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-compare::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 90% 55% at 50% -30%, rgba(226, 255, 0, 0.09), transparent 52%),
+        radial-gradient(ellipse 50% 40% at 100% 50%, rgba(226, 255, 0, 0.03), transparent 50%);
+      pointer-events: none;
+    }
+
+    .section-compare__inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-compare__title {
+      text-align: center;
+      font-size: clamp(1.35rem, 3.2vw, 2.05rem);
+      font-weight: 700;
+      line-height: 1.22;
+      margin: 0 auto clamp(12px, 2vw, 18px);
+      letter-spacing: 0.02em;
+      max-width: 22em;
+      color: #fafafa;
+    }
+
+    .section-compare__subtitle {
+      text-align: center;
+      margin: 0 auto clamp(36px, 5vw, 52px);
+      font-size: clamp(0.88rem, 1.35vw, 1rem);
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.48);
+      max-width: 36em;
+    }
+
+    .section-compare__table-wrap {
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      overflow: hidden;
+      box-shadow:
+        0 28px 80px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.025);
+      backdrop-filter: blur(8px);
+    }
+
+    .compare-grid {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .compare-grid__row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.75fr) minmax(92px, 0.42fr) minmax(108px, 0.5fr);
+      align-items: stretch;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      transition: background 0.22s ease;
+    }
+
+    .compare-grid__row:last-child {
+      border-bottom: none;
+    }
+
+    .compare-grid__row:not(.compare-grid__row--head):hover {
+      background: rgba(226, 255, 0, 0.04);
+    }
+
+    .compare-grid__row:not(.compare-grid__row--head):hover .compare-grid__cell--ok {
+      filter: brightness(1.03);
+    }
+
+    .compare-grid__cell {
+      padding: clamp(14px, 2vw, 20px) clamp(14px, 2.2vw, 22px);
+      display: flex;
+      align-items: center;
+    }
+
+    .compare-grid__row--head .compare-grid__cell {
+      padding-top: clamp(18px, 2.5vw, 26px);
+      padding-bottom: clamp(18px, 2.5vw, 26px);
+    }
+
+    .compare-grid__cell--corner {
+      background: #141414;
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .compare-grid__cell--h {
+      justify-content: center;
+      text-align: center;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(255, 255, 255, 0.42);
+      background: #141414;
+    }
+
+    .compare-grid__cell--h.compare-grid__cell--united-head {
+      flex-direction: column;
+      gap: 10px;
+      background: var(--accent-lime);
+      color: #111;
+      border-left: 1px solid rgba(0, 0, 0, 0.08);
+      letter-spacing: 0.1em;
+    }
+
+    .compare-grid__cell--united-head img {
+      display: block;
+      height: clamp(24px, 3.2vw, 32px);
+      width: auto;
+    }
+
+    .compare-grid__cell--united-head span {
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .compare-grid__row:not(.compare-grid__row--head):nth-child(even) .compare-grid__cell--feat,
+    .compare-grid__row:not(.compare-grid__row--head):nth-child(even) .compare-grid__cell--x {
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    .compare-grid__row:not(.compare-grid__row--head):nth-child(odd) .compare-grid__cell--feat,
+    .compare-grid__row:not(.compare-grid__row--head):nth-child(odd) .compare-grid__cell--x {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .compare-grid__cell--feat {
+      font-size: clamp(0.8rem, 1.15vw, 0.94rem);
+      line-height: 1.48;
+      color: rgba(255, 255, 255, 0.88);
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .compare-grid__cell--x {
+      justify-content: center;
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+      position: relative;
+    }
+
+    .compare-grid__cell--ok {
+      justify-content: center;
+      background: var(--accent-lime);
+      transition: filter 0.2s ease;
+      position: relative;
+    }
+
+    .compare-grid__icon {
+      width: clamp(22px, 3vw, 28px);
+      height: clamp(22px, 3vw, 28px);
+      flex-shrink: 0;
+    }
+
+    .compare-grid__icon--x {
+      color: rgba(255, 255, 255, 0.28);
+    }
+
+    .compare-grid__icon--check {
+      color: #111;
+    }
+
+    .compare-a11y {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 720px) {
+      .compare-grid__row--head {
+        display: none;
+      }
+
+      .section-compare__table-wrap {
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        backdrop-filter: none;
+        border-radius: 0;
+        overflow: visible;
+      }
+
+      .compare-grid {
+        gap: 12px;
+      }
+
+      .compare-grid__row:not(.compare-grid__row--head) {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto minmax(88px, auto);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.04);
+        border-bottom: none;
+      }
+
+      .compare-grid__row:not(.compare-grid__row--head):hover {
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .compare-grid__cell--feat {
+        grid-column: 1 / -1;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        font-size: clamp(0.88rem, 3.5vw, 0.98rem);
+      }
+
+      .compare-grid__cell--x,
+      .compare-grid__cell--ok {
+        flex-direction: column;
+        justify-content: center;
+        gap: 10px;
+        padding: 16px 12px;
+      }
+
+      .compare-grid__cell--x::before {
+        content: "Agências";
+        font-size: 0.62rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.38);
+      }
+
+      .compare-grid__cell--ok::before {
+        content: "United";
+        font-size: 0.62rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(0, 0, 0, 0.5);
+      }
+
+      .compare-grid__cell--x {
+        background: rgba(0, 0, 0, 0.35);
+        border-right: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .compare-grid__row:not(.compare-grid__row--head):nth-child(even) .compare-grid__cell--feat,
+      .compare-grid__row:not(.compare-grid__row--head):nth-child(odd) .compare-grid__cell--feat {
+        background: transparent;
+      }
+
+      .compare-grid__row:not(.compare-grid__row--head):nth-child(even) .compare-grid__cell--x,
+      .compare-grid__row:not(.compare-grid__row--head):nth-child(odd) .compare-grid__cell--x {
+        background: rgba(0, 0, 0, 0.35);
+      }
+    }
+
+    /* Números / prova social — fundo branco + arte +500M (no lugar do bloco visual original) */
+    .section-social-proof {
+      width: 100%;
+      background: #fff;
+      color: #111;
+      padding: clamp(40px, 6vw, 72px) clamp(18px, 4vw, 48px);
+    }
+
+    .section-social-proof__hero-img {
+      display: block;
+      width: 100%;
+      max-width: 680px;
+      height: auto;
+      margin: 0;
+      opacity: 1;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .section-social-proof__inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr);
+      gap: clamp(28px, 5vw, 52px);
+      align-items: start;
+    }
+
+    .section-social-proof__intro {
+      min-width: 0;
+    }
+
+    .section-social-proof__title {
+      margin: 0 0 14px;
+      font-size: clamp(1.1rem, 1.85vw, 1.42rem);
+      font-weight: 600;
+      line-height: 1.32;
+      max-width: 22em;
+      color: #111;
+      opacity: 1;
+    }
+
+    .section-social-proof__rule {
+      width: 118px;
+      height: 3px;
+      margin: 0 0 22px;
+      border: 0;
+      background: linear-gradient(90deg, var(--accent-lime) 0%, var(--accent-lime) 42%, #1a1a1a 42%, #1a1a1a 100%);
+    }
+
+    .section-social-proof__visual {
+      margin-top: 4px;
+    }
+
+
+    .section-social-proof__stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(18px, 2.8vw, 28px) clamp(22px, 4vw, 40px);
+    }
+
+    .social-stat {
+      padding: 4px 0 8px;
+    }
+
+    .social-stat__value {
+      margin: 0;
+      font-size: clamp(1.85rem, 4.2vw, 3rem);
+      font-weight: 800;
+      line-height: 1;
+      color: var(--accent-lime);
+      letter-spacing: 0.02em;
+    }
+
+    .social-stat__line {
+      height: 1px;
+      background: #ccc;
+      margin: 12px 0 12px;
+      max-width: 100%;
+    }
+
+    .social-stat__desc {
+      margin: 0;
+      font-size: clamp(0.82rem, 1.2vw, 0.95rem);
+      line-height: 1.45;
+      color: #222;
+      font-weight: 400;
+      opacity: 1;
+    }
+
+    .section-social-proof__cta-wrap {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding-top: clamp(32px, 5vw, 48px);
+      text-align: center;
+    }
+
+    .section-social-proof__btn {
+      display: inline-block;
+      background: var(--accent-lime);
+      color: #000;
+      border: none;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 7px 18px;
+      font-size: 0.6875rem;
+      line-height: 1.25;
+      cursor: pointer;
+      border-radius: 3px;
+      font-family: inherit;
+    }
+
+    .section-social-proof__btn:hover {
+      filter: brightness(0.97);
+    }
+
+    @media (max-width: 900px) {
+      .section-escritorios__inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .section-escritorios__copy {
+        text-align: center;
+        max-width: 32rem;
+        margin: 0 auto;
+      }
+
+      .section-escritorios__rule {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .section-escritorios__lead {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .section-escritorios__features {
+        grid-template-columns: 1fr;
+        max-width: 26rem;
+        margin: 0 auto;
+        gap: 26px;
+      }
+
+      .section-escritorios__collage {
+        max-width: min(100%, 400px);
+        min-height: 340px;
+      }
+
+      .section-social-proof__inner {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+
+      .section-social-proof__intro {
+        text-align: center;
+        max-width: 28rem;
+        margin: 0 auto;
+      }
+
+      .section-social-proof__title {
+        margin-left: auto;
+        margin-right: auto;
+        font-size: clamp(1.2rem, 4.8vw, 1.65rem);
+        max-width: none;
+      }
+
+      .section-social-proof__rule {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .section-social-proof__intro .section-social-proof__hero-img {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: min(100%, 640px);
+      }
+
+      .section-social-proof__stats {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        max-width: 22rem;
+        margin: 0 auto;
+      }
+
+      .social-stat {
+        text-align: center;
+      }
+
+      .social-stat__value {
+        font-size: clamp(2rem, 9vw, 3.25rem);
+      }
+
+      .social-stat__line {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 12rem;
+      }
+
+      .social-stat__desc {
+        font-size: clamp(0.95rem, 3.8vw, 1.08rem);
+      }
+
+      .section-social-proof__btn {
+        font-size: 0.75rem;
+        padding: 8px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="pixel left" aria-hidden="true">
+      <span class="fade"></span><span class="empty"></span><span class="empty"></span>
+      <span class="medium"></span><span class="medium"></span><span class="empty"></span>
+      <span class="fade"></span><span class="medium"></span><span class="medium"></span>
+    </div>
+
+    <div class="pixel right" aria-hidden="true">
+      <span class="medium"></span><span class="fade"></span><span class="fade"></span>
+      <span class="empty"></span><span class="medium"></span><span class="empty"></span>
+      <span class="empty"></span><span class="empty"></span><span class="empty"></span>
+    </div>
+
+    <div class="pixel right-2" aria-hidden="true">
+      <span class="empty"></span><span class="medium"></span><span class="empty"></span>
+      <span class="medium"></span><span class="fade"></span><span class="empty"></span>
+      <span class="empty"></span><span class="empty"></span><span class="empty"></span>
+    </div>
+
+    <header class="logo">
+      <img src="assets/logo-united.png" alt="United">
+    </header>
+
+    <section class="card">
+      <article class="left">
+        <div class="hero-image">
+          <img src="assets/hero-office.png" alt="Escritório United">
+        </div>
+        <h1 class="headline"><strong>Seja dono</strong> de um escritório <strong>United</strong></h1>
+        <p class="desc">E se torne um sócio-executivo da <strong>marca que domina o setor mais promissor do mercado.</strong></p>
+        <p class="mobile-extra"><strong>Cadastre-se</strong> e conheça a proposta da United</p>
+        <span class="star" aria-hidden="true">✹</span>
+      </article>
+
+      <aside class="right">
+        <form>
+          <input type="text" placeholder="* Nome">
+          <input type="email" placeholder="* E-mail">
+          <input type="tel" placeholder="* Telefone com DDD">
+          <select>
+            <option>* Qual sua atuação hoje?</option>
+          </select>
+          <select>
+            <option>* Quando você pretende assumir sua franquia?</option>
+          </select>
+          <select>
+            <option>* Quanto tem para investir?</option>
+          </select>
+          <select>
+            <option>* Você já possui possíveis sócios?</option>
+          </select>
+          <button type="button">QUERO FAZER NEGÓCIO COM A UNITED</button>
+        </form>
+      </aside>
+    </section>
+  </main>
+
+  <section class="section-assessoria" aria-labelledby="assessoria-heading">
+    <div class="section-assessoria__inner">
+      <div class="section-assessoria__media">
+        <img src="assets/section-assessoria.png" alt="Retrato profissional United Market">
+      </div>
+      <div class="section-assessoria__copy">
+        <h2 id="assessoria-heading" class="section-assessoria__title">A maior Assessoria de Marketing do Brasil está selecionando novos sócios-executivos</h2>
+        <div class="section-assessoria__rule" role="presentation"></div>
+        <p class="section-assessoria__body">Sim, é assim que tratamos nossos franqueados: como sócios. Eles constroem esse negócio com a gente, e se você quiser, pode fazer parte disso também.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-escritorios" aria-labelledby="escritorios-heading">
+    <div class="section-escritorios__inner">
+      <div class="section-escritorios__copy">
+        <h2 id="escritorios-heading" class="section-escritorios__title">Torne-se dono (a) de um dos nossos escritórios</h2>
+        <div class="section-escritorios__rule" role="presentation"></div>
+        <p class="section-escritorios__lead">Como dono ou dona de um escritório de marketing da <strong>United</strong>, você receberá toda a estrutura necessária para empreender em um dos setores que <strong>mais dão dinheiro no mundo</strong>.</p>
+        <ul class="section-escritorios__features">
+          <li class="section-escritorios__feature">
+            <svg class="section-escritorios__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+              <circle cx="24" cy="24" r="18" fill="none" stroke="currentColor" stroke-width="2.8"/>
+              <circle cx="24" cy="24" r="14" fill="none" stroke="currentColor" stroke-width="2"/>
+              <path fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" d="M14 24a10 10 0 0 1 17-7M34 24a10 10 0 0 1-17 7"/>
+              <text x="24" y="29" text-anchor="middle" font-size="17" font-weight="700" fill="currentColor">$</text>
+            </svg>
+            <p><strong>Payback de 8 a 18</strong> meses em média</p>
+          </li>
+          <li class="section-escritorios__feature">
+            <svg class="section-escritorios__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+              <circle cx="24" cy="26" r="16" fill="none" stroke="currentColor" stroke-width="2.8"/>
+              <text x="24" y="31" text-anchor="middle" font-size="16" font-weight="700" fill="currentColor">$</text>
+              <path fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" d="M24 6v8M20 10h8"/>
+            </svg>
+            <p><strong>Ampla margem</strong> de lucro</p>
+          </li>
+          <li class="section-escritorios__feature">
+            <svg class="section-escritorios__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+              <path fill="none" stroke="currentColor" stroke-width="2.6" d="M10 34V22h8v12M22 34V14h8v20M34 34V26h8v8"/>
+              <path fill="currentColor" d="M18 18h4v3h-4z"/>
+              <path fill="none" stroke="currentColor" stroke-width="2.3" d="M16 12l4-4 4 4"/>
+            </svg>
+            <p>Sem limite de <strong>faturamento</strong></p>
+          </li>
+        </ul>
+      </div>
+      <div class="section-escritorios__collage">
+        <span class="section-escritorios__deco section-escritorios__deco--a" aria-hidden="true"></span>
+        <span class="section-escritorios__deco section-escritorios__deco--b" aria-hidden="true"></span>
+        <span class="section-escritorios__deco section-escritorios__deco--c" aria-hidden="true"></span>
+        <img class="section-escritorios__photo section-escritorios__photo--1" src="assets/escritorios-photo-1.png" alt="Franqueado United em estúdio">
+        <img class="section-escritorios__photo section-escritorios__photo--2" src="assets/escritorios-photo-2.png" alt="Franqueado United em retrato profissional">
+        <img class="section-escritorios__photo section-escritorios__photo--3" src="assets/escritorios-photo-3.png" alt="Franqueado United em produção de conteúdo">
+        <div class="section-escritorios__arrow-box" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M7 17L17 7M17 7H9M17 7v8"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-social-proof" aria-labelledby="social-proof-heading">
+    <div class="section-social-proof__inner">
+      <div class="section-social-proof__intro">
+        <h2 id="social-proof-heading" class="section-social-proof__title">Os números provam que a United é um bom negócio:</h2>
+        <div class="section-social-proof__rule" role="presentation"></div>
+        <div class="section-social-proof__visual">
+          <img class="section-social-proof__hero-img" src="assets/section-500m.png" alt="+500 milhões faturados para os nossos clientes e parceiros através das nossas soluções. United Marketing Agency.">
+        </div>
+      </div>
+      <div class="section-social-proof__stats">
+        <article class="social-stat">
+          <p class="social-stat__value">260</p>
+          <div class="social-stat__line" aria-hidden="true"></div>
+          <p class="social-stat__desc">Escritórios em todo o Brasil</p>
+        </article>
+        <article class="social-stat">
+          <p class="social-stat__value">15.600</p>
+          <div class="social-stat__line" aria-hidden="true"></div>
+          <p class="social-stat__desc">Clientes já atendidos</p>
+        </article>
+        <article class="social-stat">
+          <p class="social-stat__value">99%</p>
+          <div class="social-stat__line" aria-hidden="true"></div>
+          <p class="social-stat__desc">Abririam uma franquia United novamente</p>
+        </article>
+        <article class="social-stat">
+          <p class="social-stat__value">89,9%</p>
+          <div class="social-stat__line" aria-hidden="true"></div>
+          <p class="social-stat__desc">Franqueados tiveram ROI antes do prazo esperado</p>
+        </article>
+      </div>
+    </div>
+    <div class="section-social-proof__cta-wrap">
+      <button type="button" class="section-social-proof__btn">QUERO MAIS DETALHES</button>
+    </div>
+  </section>
+
+  <section class="section-compare" aria-labelledby="compare-heading">
+    <svg class="compare-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden">
+      <defs>
+        <symbol id="cmp-x" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" d="M7 7l10 10M17 7L7 17"/></symbol>
+        <symbol id="cmp-check" viewBox="0 0 24 24"><path fill="currentColor" d="M9.55 18 3 11.45l1.4-1.4 5.05 5.05L19.6 4.55 21 6l-11.45 11.45Z"/></symbol>
+      </defs>
+    </svg>
+    <div class="section-compare__inner">
+      <h2 id="compare-heading" class="section-compare__title">Por que a United e não outra franquia?</h2>
+      <p class="section-compare__subtitle">Veja o que você leva na prática ao lado de uma agência comum — e por que nosso modelo foi pensado para quem quer escalar com segurança.</p>
+      <div class="section-compare__table-wrap">
+        <div class="compare-grid" role="table" aria-label="Comparativo entre agências comuns e a franquia United">
+          <div class="compare-grid__row compare-grid__row--head" role="row">
+            <div class="compare-grid__cell compare-grid__cell--corner" role="columnheader"><span class="compare-a11y">Critério</span></div>
+            <div class="compare-grid__cell compare-grid__cell--h" role="columnheader">Agências</div>
+            <div class="compare-grid__cell compare-grid__cell--h compare-grid__cell--united-head" role="columnheader">
+              <img src="assets/logo-united.png" alt="">
+              <span>United</span>
+            </div>
+          </div>
+          <div class="compare-grid__row" role="row">
+            <div class="compare-grid__cell compare-grid__cell--feat" role="rowheader">Suporte na tratativa com clientes, consultoria trabalhista, e até implementação de diretrizes do compliance.</div>
+            <div class="compare-grid__cell compare-grid__cell--x" role="cell">
+              <span class="compare-a11y">Agências: não oferece</span>
+              <svg class="compare-grid__icon compare-grid__icon--x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-x"/></svg>
+            </div>
+            <div class="compare-grid__cell compare-grid__cell--ok" role="cell">
+              <span class="compare-a11y">United: oferece</span>
+              <svg class="compare-grid__icon compare-grid__icon--check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-check"/></svg>
+            </div>
+          </div>
+          <div class="compare-grid__row" role="row">
+            <div class="compare-grid__cell compare-grid__cell--feat" role="rowheader">Temos soluções que nenhuma outra empresa de marketing tem.</div>
+            <div class="compare-grid__cell compare-grid__cell--x" role="cell">
+              <span class="compare-a11y">Agências: não oferece</span>
+              <svg class="compare-grid__icon compare-grid__icon--x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-x"/></svg>
+            </div>
+            <div class="compare-grid__cell compare-grid__cell--ok" role="cell">
+              <span class="compare-a11y">United: oferece</span>
+              <svg class="compare-grid__icon compare-grid__icon--check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-check"/></svg>
+            </div>
+          </div>
+          <div class="compare-grid__row" role="row">
+            <div class="compare-grid__cell compare-grid__cell--feat" role="rowheader">Traz oportunidades até você.</div>
+            <div class="compare-grid__cell compare-grid__cell--x" role="cell">
+              <span class="compare-a11y">Agências: não oferece</span>
+              <svg class="compare-grid__icon compare-grid__icon--x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-x"/></svg>
+            </div>
+            <div class="compare-grid__cell compare-grid__cell--ok" role="cell">
+              <span class="compare-a11y">United: oferece</span>
+              <svg class="compare-grid__icon compare-grid__icon--check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-check"/></svg>
+            </div>
+          </div>
+          <div class="compare-grid__row" role="row">
+            <div class="compare-grid__cell compare-grid__cell--feat" role="rowheader">Tem formação própria para qualificar a rede e trazer mais pessoas qualificadas.</div>
+            <div class="compare-grid__cell compare-grid__cell--x" role="cell">
+              <span class="compare-a11y">Agências: não oferece</span>
+              <svg class="compare-grid__icon compare-grid__icon--x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-x"/></svg>
+            </div>
+            <div class="compare-grid__cell compare-grid__cell--ok" role="cell">
+              <span class="compare-a11y">United: oferece</span>
+              <svg class="compare-grid__icon compare-grid__icon--check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-check"/></svg>
+            </div>
+          </div>
+          <div class="compare-grid__row" role="row">
+            <div class="compare-grid__cell compare-grid__cell--feat" role="rowheader">Ajudar você no processo de contratação.</div>
+            <div class="compare-grid__cell compare-grid__cell--x" role="cell">
+              <span class="compare-a11y">Agências: não oferece</span>
+              <svg class="compare-grid__icon compare-grid__icon--x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-x"/></svg>
+            </div>
+            <div class="compare-grid__cell compare-grid__cell--ok" role="cell">
+              <span class="compare-a11y">United: oferece</span>
+              <svg class="compare-grid__icon compare-grid__icon--check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-check"/></svg>
+            </div>
+          </div>
+          <div class="compare-grid__row" role="row">
+            <div class="compare-grid__cell compare-grid__cell--feat" role="rowheader">Influência no Instagram com milhões de visualizações nos anúncios.</div>
+            <div class="compare-grid__cell compare-grid__cell--x" role="cell">
+              <span class="compare-a11y">Agências: não oferece</span>
+              <svg class="compare-grid__icon compare-grid__icon--x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-x"/></svg>
+            </div>
+            <div class="compare-grid__cell compare-grid__cell--ok" role="cell">
+              <span class="compare-a11y">United: oferece</span>
+              <svg class="compare-grid__icon compare-grid__icon--check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-check"/></svg>
+            </div>
+          </div>
+          <div class="compare-grid__row" role="row">
+            <div class="compare-grid__cell compare-grid__cell--feat" role="rowheader">Auxilia no processo de cobrança, emissão de boletos, gestão financeira e controle de inadimplência.</div>
+            <div class="compare-grid__cell compare-grid__cell--x" role="cell">
+              <span class="compare-a11y">Agências: não oferece</span>
+              <svg class="compare-grid__icon compare-grid__icon--x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-x"/></svg>
+            </div>
+            <div class="compare-grid__cell compare-grid__cell--ok" role="cell">
+              <span class="compare-a11y">United: oferece</span>
+              <svg class="compare-grid__icon compare-grid__icon--check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#cmp-check"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
