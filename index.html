@@ -395,7 +395,7 @@
 
       /* ===== NAVBAR ===== */
       .navbar-wrap {
-        top: calc(env(safe-area-inset-top, 0px) + 12px);
+        top: calc(env(safe-area-inset-top, 0px) + 16px);
         width: calc(100% - 32px);
         max-width: none;
         overflow: visible;
@@ -404,17 +404,18 @@
         position: relative;
         width: 100%;
         box-sizing: border-box;
-        padding: 12px 16px !important;
+        padding: 14px max(12px, env(safe-area-inset-right, 0px)) 14px max(20px, env(safe-area-inset-left, 0px)) !important;
         border-radius: 50px !important;
         gap: 0 !important;
         justify-content: space-between !important;
+        align-content: center !important;
         display: flex !important;
         align-items: center !important;
         flex-wrap: nowrap !important;
         overflow: visible !important;
       }
       .logo-img {
-        height: 28px !important;
+        height: 30px !important;
         display: block !important;
         flex: 0 0 auto;
       }
@@ -493,8 +494,9 @@
         flex: 0 0 auto;
         min-width: 44px;
         min-height: 44px;
-        padding: 10px;
+        padding: 10px 4px 10px 14px;
         margin: 0;
+        margin-right: max(-18px, calc(env(safe-area-inset-right, 0px) - 32px));
         border-radius: 12px;
         -webkit-tap-highlight-color: transparent;
       }
@@ -1248,37 +1250,417 @@
       font-weight: 700;
     }
 
-    /* Vitrine de marcas / projetos — mesmo tratamento visual dos cards “tech” da landing formatada */
-    .section-escritorios__gallery {
+    /* Carrossel — vitrine escritórios */
+    .section-escritorios__carousel {
       margin-top: clamp(36px, 6vw, 56px);
       width: 100%;
+      max-width: min(440px, 100%);
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
     }
 
-    .section-escritorios__gallery-grid {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: clamp(16px, 2.5vw, 24px);
-    }
-
-    .section-escritorios__gallery-card {
-      margin: 0;
-      border-radius: 18px;
+    .section-escritorios__car-viewport {
       overflow: hidden;
+      border-radius: 18px;
       border: 1px solid var(--card-border);
       background: linear-gradient(165deg, rgba(255, 255, 255, 0.04) 0%, transparent 45%), var(--card);
       box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
       aspect-ratio: 1;
     }
 
-    .section-escritorios__gallery-card img {
+    .section-escritorios__car-track {
+      display: flex;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .section-escritorios__car-slide {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .section-escritorios__car-slide img {
       display: block;
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center;
+    }
+
+    .section-escritorios__car-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(23, 25, 28, 0.88);
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      transition: background 0.2s ease, color 0.2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .section-escritorios__car-btn svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .section-escritorios__car-btn:hover {
+      background: var(--accent);
+      color: #000;
+    }
+
+    .section-escritorios__car-btn:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .section-escritorios__car-btn--prev { left: 8px; }
+    .section-escritorios__car-btn--next { right: 8px; }
+
+    .section-escritorios__car-dots {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .section-escritorios__car-dots li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .section-escritorios__car-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      border: none;
+      padding: 0;
+      background: rgba(255, 255, 255, 0.22);
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .section-escritorios__car-dot.is-active {
+      background: var(--accent);
+      transform: scale(1.15);
+    }
+
+    /* Entenda o nosso diferencial (referência) */
+    .comparison-section {
+      background: var(--bg);
+      padding: clamp(64px, 10vw, 100px) clamp(20px, 5vw, 80px);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .comparison-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .comparison-heading {
+      text-align: center;
+      margin-bottom: clamp(32px, 5vw, 56px);
+    }
+
+    .comparison-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: clamp(14px, 1.8vw, 16px);
+      color: var(--accent);
+      margin-bottom: 18px;
+    }
+
+    .comparison-tag-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #000;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      line-height: 1;
+    }
+
+    .comparison-title {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: clamp(28px, 4vw, 64px);
+      font-weight: 500;
+      color: #fff;
+      letter-spacing: -0.03em;
+      margin: 0;
+    }
+
+    .comparison-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(18px, 3vw, 32px);
+      max-width: 1000px;
+      margin: 0 auto;
+      align-items: stretch;
+    }
+
+    .comp-card {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      width: 100%;
+      min-width: 0;
+      align-content: start;
+    }
+
+    .comp-card-label {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: clamp(18px, 2.2vw, 22px);
+      font-weight: 400;
+      color: #555;
+      text-align: center;
+      margin-bottom: 20px;
+      min-height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .comp-card-label-united {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .comp-list {
+      background: rgba(0, 0, 0, 0.18);
+      border: 2px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      padding: clamp(24px, 4vw, 36px) clamp(22px, 3vw, 40px);
+      display: flex;
+      flex-direction: column;
+      gap: clamp(18px, 2.5vw, 28px);
+      min-height: 0;
+      align-self: stretch;
+      box-sizing: border-box;
+    }
+
+    .comp-list.highlight {
+      border-color: var(--accent);
+    }
+
+    .comp-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: clamp(15px, 1.6vw, 18px);
+      font-weight: 500;
+      color: #555;
+    }
+
+    .comp-item.good {
+      color: #fff;
+    }
+
+    .comp-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    .comp-icon.bad {
+      background: transparent;
+      color: #555;
+    }
+
+    .comp-icon.ok {
+      background: transparent;
+      color: var(--accent);
+    }
+
+    /* Jornada de entregas + David */
+    .section-journey-david {
+      background: var(--bg);
+      padding: clamp(56px, 9vw, 96px) clamp(20px, 5vw, 48px) clamp(72px, 12vw, 120px);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .section-journey-david__inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .stats-journey-title {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: clamp(28px, 4vw, 60px);
+      font-weight: 600;
+      text-align: center;
+      letter-spacing: -0.04em;
+      margin: 0 0 clamp(36px, 6vw, 60px);
+      line-height: 1.1;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      background: linear-gradient(0deg, #fff 30%, #999 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .stats-journey-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-bottom: clamp(48px, 8vw, 100px);
+      gap: 0;
+      align-items: stretch;
+    }
+
+    .stats-journey-cell {
+      padding: 32px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 0;
+      box-sizing: border-box;
+    }
+
+    .stats-journey-cell--divider {
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .stats-journey-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      max-width: 100%;
+      text-align: center;
+    }
+
+    .stats-journey-num {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 500;
+      color: #fff;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .stats-journey-label {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: clamp(14px, 1.5vw, 16px);
+      font-weight: 400;
+      color: #666;
+      line-height: 1.35;
+      max-width: min(200px, 85vw);
+    }
+
+    .david-quote-card {
+      background: #0b0b0b;
+      border-radius: 32px;
+      padding: clamp(36px, 5vw, 56px) clamp(24px, 5vw, 64px) clamp(32px, 5vw, 52px);
+      text-align: center;
+      max-width: 960px;
+      width: 100%;
+      margin: 0 auto;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-sizing: border-box;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    .david-quote-photo-wrap {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 18px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .david-quote-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .david-quote-byline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: clamp(12px, 1.4vw, 14px);
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+      flex-wrap: wrap;
+      line-height: 1.35;
+      max-width: 42rem;
+      margin: 0 auto 26px;
+    }
+
+    .david-quote-icon {
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      line-height: 1;
+      flex-shrink: 0;
+      font-weight: 700;
+    }
+
+    .david-quote-text {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: clamp(18px, 2.2vw, 32px);
+      font-weight: 500;
+      color: #fff;
+      letter-spacing: -0.03em;
+      line-height: 1.38;
+      max-width: 38rem;
+      margin: 0 auto;
+      border: none;
+      padding: 0;
+    }
+
+    .david-quote-text .david-quote-lead {
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .david-quote-text .david-quote-muted {
+      color: rgba(255, 255, 255, 0.55);
+      font-weight: 500;
     }
 
     /* Comparativo United × agências */
@@ -1747,22 +2129,77 @@
       margin: 0;
     }
 
-    @media (max-width: 639px) {
-      .section-escritorios__gallery-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-        max-width: 22rem;
-        margin-left: auto;
-        margin-right: auto;
+    @media (max-width: 860px) {
+      .comparison-section {
+        padding: 64px 20px !important;
       }
-    }
 
-    @media (min-width: 640px) and (max-width: 900px) {
-      .section-escritorios__gallery-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        max-width: 42rem;
-        margin-left: auto;
-        margin-right: auto;
+      .comparison-heading {
+        margin-bottom: 28px !important;
+      }
+
+      .comparison-tag {
+        font-size: 14px !important;
+        margin-bottom: 14px !important;
+      }
+
+      .comparison-title {
+        font-size: clamp(26px, 7.2vw, 34px) !important;
+      }
+
+      .comparison-cards {
+        grid-template-columns: 1fr !important;
+        gap: 18px !important;
+      }
+
+      .stats-journey-grid {
+        grid-template-columns: 1fr !important;
+        margin-bottom: 48px !important;
+      }
+
+      .stats-journey-cell--divider {
+        border-right: none !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+      }
+
+      .stats-journey-cell:last-child {
+        border-bottom: none !important;
+      }
+
+      .stats-journey-cell {
+        padding: 28px 12px !important;
+      }
+
+      .stats-journey-stat {
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+      }
+
+      .stats-journey-title {
+        margin-bottom: 32px !important;
+        font-size: clamp(26px, 7vw, 40px) !important;
+      }
+
+      .stats-journey-num {
+        font-size: clamp(36px, 10vw, 48px) !important;
+      }
+
+      .david-quote-text {
+        font-size: 18px !important;
+        line-height: 1.42 !important;
+        max-width: 100% !important;
+      }
+
+      .david-quote-card {
+        padding: 36px 22px !important;
+        border-radius: 24px !important;
+        max-width: 100% !important;
+      }
+
+      .david-quote-byline {
+        font-size: 13px !important;
+        max-width: 100% !important;
       }
     }
 
@@ -1776,10 +2213,6 @@
         max-width: 26rem;
         margin: 0 auto;
         gap: 36px;
-      }
-
-      .section-escritorios__gallery {
-        margin-top: clamp(32px, 8vw, 48px);
       }
 
       .section-ecossistema {
@@ -1859,7 +2292,7 @@
     <ul class="nav-links" id="navLinks">
       <li><a href="#hero" onclick="closeMenu()">Home</a></li>
       <li><a href="#about" onclick="closeMenu()">Sobre</a></li>
-      <li><a href="#compare-heading" onclick="closeMenu()">Diferenciais</a></li>
+      <li><a href="#diferencial" onclick="closeMenu()">Diferenciais</a></li>
       <li><a href="#ecossistema-heading" onclick="closeMenu()">Ecossistema</a></li>
       <li><a href="#contact" onclick="closeMenu()">Contato</a></li>
     </ul>
@@ -2034,36 +2467,124 @@
           </li>
         </ul>
         <div class="section-escritorios__gallery" aria-label="Exemplos de projetos e identidades para escritórios parceiros">
-          <ul class="section-escritorios__gallery-grid">
-            <li class="section-escritorios__gallery-card">
-              <img src="assets/escritorios-showcase-01.png" alt="Fachada moderna de negócio com marca em destaque." width="480" height="480" loading="lazy" decoding="async">
-            </li>
-            <li class="section-escritorios__gallery-card">
-              <img src="assets/escritorios-showcase-02.png" alt="Material institucional premium para serviços financeiros." width="480" height="480" loading="lazy" decoding="async">
-            </li>
-            <li class="section-escritorios__gallery-card">
-              <img src="assets/escritorios-showcase-03.png" alt="Stand e vitrine corporativa em estilo premium." width="480" height="480" loading="lazy" decoding="async">
-            </li>
-            <li class="section-escritorios__gallery-card">
-              <img src="assets/escritorios-showcase-04.png" alt="Identidade visual e papelaria corporativa." width="480" height="480" loading="lazy" decoding="async">
-            </li>
-            <li class="section-escritorios__gallery-card">
-              <img src="assets/escritorios-showcase-05.png" alt="Mockup de marca em materiais de escritório." width="480" height="480" loading="lazy" decoding="async">
-            </li>
-            <li class="section-escritorios__gallery-card">
-              <img src="assets/escritorios-showcase-06.png" alt="Produtos e brindes com marca aplicada." width="480" height="480" loading="lazy" decoding="async">
-            </li>
-            <li class="section-escritorios__gallery-card">
-              <img src="assets/escritorios-showcase-07.png" alt="Embalagem e identidade de produto." width="480" height="480" loading="lazy" decoding="async">
-            </li>
-            <li class="section-escritorios__gallery-card">
-              <img src="assets/escritorios-showcase-08.png" alt="Apresentação de marca em evento corporativo." width="480" height="480" loading="lazy" decoding="async">
-            </li>
-            <li class="section-escritorios__gallery-card">
-              <img src="assets/escritorios-showcase-09.png" alt="Ambiente de escritório com identidade digital em destaque." width="480" height="480" loading="lazy" decoding="async">
-            </li>
-          </ul>
+          <div class="section-escritorios__carousel" data-escritorios-carousel>
+            <div class="section-escritorios__car-viewport">
+              <ul class="section-escritorios__car-track">
+                <li class="section-escritorios__car-slide">
+                  <img src="assets/escritorios-showcase-01.png" alt="Fachada moderna de negócio com marca em destaque." width="480" height="480" loading="lazy" decoding="async">
+                </li>
+                <li class="section-escritorios__car-slide">
+                  <img src="assets/escritorios-showcase-02.png" alt="Material institucional premium para serviços financeiros." width="480" height="480" loading="lazy" decoding="async">
+                </li>
+                <li class="section-escritorios__car-slide">
+                  <img src="assets/escritorios-showcase-03.png" alt="Stand e vitrine corporativa em estilo premium." width="480" height="480" loading="lazy" decoding="async">
+                </li>
+                <li class="section-escritorios__car-slide">
+                  <img src="assets/escritorios-showcase-04.png" alt="Identidade visual e papelaria corporativa." width="480" height="480" loading="lazy" decoding="async">
+                </li>
+                <li class="section-escritorios__car-slide">
+                  <img src="assets/escritorios-showcase-05.png" alt="Mockup de marca em materiais de escritório." width="480" height="480" loading="lazy" decoding="async">
+                </li>
+                <li class="section-escritorios__car-slide">
+                  <img src="assets/escritorios-showcase-06.png" alt="Produtos e brindes com marca aplicada." width="480" height="480" loading="lazy" decoding="async">
+                </li>
+                <li class="section-escritorios__car-slide">
+                  <img src="assets/escritorios-showcase-07.png" alt="Embalagem e identidade de produto." width="480" height="480" loading="lazy" decoding="async">
+                </li>
+                <li class="section-escritorios__car-slide">
+                  <img src="assets/escritorios-showcase-08.png" alt="Apresentação de marca em evento corporativo." width="480" height="480" loading="lazy" decoding="async">
+                </li>
+                <li class="section-escritorios__car-slide">
+                  <img src="assets/escritorios-showcase-09.png" alt="Ambiente de escritório com identidade digital em destaque." width="480" height="480" loading="lazy" decoding="async">
+                </li>
+              </ul>
+            </div>
+            <button type="button" class="section-escritorios__car-btn section-escritorios__car-btn--prev" aria-label="Imagem anterior">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 6l-6 6 6 6"/></svg>
+            </button>
+            <button type="button" class="section-escritorios__car-btn section-escritorios__car-btn--next" aria-label="Próxima imagem">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
+            </button>
+            <ul class="section-escritorios__car-dots">
+              <li><button type="button" class="section-escritorios__car-dot is-active" data-escritorios-dot="0" aria-label="Ir para imagem 1 de 9"></button></li>
+              <li><button type="button" class="section-escritorios__car-dot" data-escritorios-dot="1" aria-label="Ir para imagem 2 de 9"></button></li>
+              <li><button type="button" class="section-escritorios__car-dot" data-escritorios-dot="2" aria-label="Ir para imagem 3 de 9"></button></li>
+              <li><button type="button" class="section-escritorios__car-dot" data-escritorios-dot="3" aria-label="Ir para imagem 4 de 9"></button></li>
+              <li><button type="button" class="section-escritorios__car-dot" data-escritorios-dot="4" aria-label="Ir para imagem 5 de 9"></button></li>
+              <li><button type="button" class="section-escritorios__car-dot" data-escritorios-dot="5" aria-label="Ir para imagem 6 de 9"></button></li>
+              <li><button type="button" class="section-escritorios__car-dot" data-escritorios-dot="6" aria-label="Ir para imagem 7 de 9"></button></li>
+              <li><button type="button" class="section-escritorios__car-dot" data-escritorios-dot="7" aria-label="Ir para imagem 8 de 9"></button></li>
+              <li><button type="button" class="section-escritorios__car-dot" data-escritorios-dot="8" aria-label="Ir para imagem 9 de 9"></button></li>
+            </ul>
+          </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="comparison-section" id="diferencial" aria-labelledby="diferencial-heading">
+    <div class="comparison-inner">
+      <div class="comparison-heading">
+        <div class="comparison-tag">
+          <span class="comparison-tag-icon" aria-hidden="true">✳</span>
+          <span>Não somos uma agência tradicional</span>
+        </div>
+        <h2 id="diferencial-heading" class="comparison-title">Entenda o nosso diferencial</h2>
+      </div>
+      <div class="comparison-cards">
+        <div class="comp-card">
+          <div class="comp-card-label">Outras Agências</div>
+          <div class="comp-list">
+            <div class="comp-item bad"><span class="comp-icon bad" aria-hidden="true">×</span><span>Comunicação Lenta</span></div>
+            <div class="comp-item bad"><span class="comp-icon bad" aria-hidden="true">×</span><span>Sem planejamento</span></div>
+            <div class="comp-item bad"><span class="comp-icon bad" aria-hidden="true">×</span><span>Não foca nos seus resultados</span></div>
+            <div class="comp-item bad"><span class="comp-icon bad" aria-hidden="true">×</span><span>Posts sem estratégia</span></div>
+            <div class="comp-item bad"><span class="comp-icon bad" aria-hidden="true">×</span><span>Valores Altos</span></div>
+          </div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-card-label comp-card-label-united">united.</div>
+          <div class="comp-list highlight">
+            <div class="comp-item good"><span class="comp-icon ok" aria-hidden="true">✓</span><span>Constância e Proatividade</span></div>
+            <div class="comp-item good"><span class="comp-icon ok" aria-hidden="true">✓</span><span>Planejamento Semanal</span></div>
+            <div class="comp-item good"><span class="comp-icon ok" aria-hidden="true">✓</span><span>Focamos nos seus Resultados</span></div>
+            <div class="comp-item good"><span class="comp-icon ok" aria-hidden="true">✓</span><span>Posts com sentido</span></div>
+            <div class="comp-item good"><span class="comp-icon ok" aria-hidden="true">✓</span><span>Pacotes de acordo com o seu tamanho</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-journey-david" id="jornada-entregas" aria-labelledby="jornada-entregas-heading">
+    <div class="section-journey-david__inner">
+      <h2 id="jornada-entregas-heading" class="stats-journey-title">Uma jornada de entregas!</h2>
+      <div class="stats-journey-grid">
+        <div class="stats-journey-cell stats-journey-cell--divider">
+          <div class="stats-journey-stat">
+            <span class="stats-journey-num">08</span>
+            <span class="stats-journey-label">Anos de Jornada</span>
+          </div>
+        </div>
+        <div class="stats-journey-cell stats-journey-cell--divider">
+          <div class="stats-journey-stat">
+            <span class="stats-journey-num">12</span>
+            <span class="stats-journey-label">Países</span>
+          </div>
+        </div>
+        <div class="stats-journey-cell">
+          <div class="stats-journey-stat">
+            <span class="stats-journey-num">700</span>
+            <span class="stats-journey-label">Projetos entregues e crescendo!</span>
+          </div>
+        </div>
+      </div>
+      <div class="david-quote-card">
+        <div class="david-quote-photo-wrap">
+          <img src="assets/david-camilie.png" alt="David Camiliê, Branding Especialist e CEO da United." width="160" height="160" loading="lazy" decoding="async">
+        </div>
+        <p class="david-quote-byline"><span class="david-quote-icon" aria-hidden="true">★</span> David Camiliê – Branding Especialist &amp; CEO United</p>
+        <blockquote class="david-quote-text"><span class="david-quote-lead">Marketing é uma guerra mental.</span> <span class="david-quote-muted">São as idéias que estão na cabeça das pessoas que determinam se um produto terá sucesso ou não.</span></blockquote>
       </div>
     </div>
   </section>
@@ -2273,6 +2794,51 @@ document.addEventListener('click', (e) => {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeMenu();
 });
+
+(function initEscritoriosCarousel() {
+  const root = document.querySelector('[data-escritorios-carousel]');
+  if (!root) return;
+  const viewport = root.querySelector('.section-escritorios__car-viewport');
+  const track = root.querySelector('.section-escritorios__car-track');
+  const slides = root.querySelectorAll('.section-escritorios__car-slide');
+  const prevBtn = root.querySelector('.section-escritorios__car-btn--prev');
+  const nextBtn = root.querySelector('.section-escritorios__car-btn--next');
+  const dots = root.querySelectorAll('.section-escritorios__car-dot');
+  const n = slides.length;
+  if (!viewport || !track || n === 0) return;
+
+  let i = 0;
+
+  function syncDots() {
+    dots.forEach((d, j) => d.classList.toggle('is-active', j === i));
+  }
+
+  function go(to) {
+    i = ((to % n) + n) % n;
+    const w = viewport.getBoundingClientRect().width;
+    track.style.transform = 'translateX(' + (-i * w) + 'px)';
+    syncDots();
+  }
+
+  prevBtn?.addEventListener('click', () => go(i - 1));
+  nextBtn?.addEventListener('click', () => go(i + 1));
+  dots.forEach((d) => {
+    d.addEventListener('click', () => {
+      const j = parseInt(d.getAttribute('data-escritorios-dot'), 10);
+      if (!Number.isNaN(j)) go(j);
+    });
+  });
+
+  let ro;
+  if (typeof ResizeObserver !== 'undefined') {
+    ro = new ResizeObserver(() => go(i));
+    ro.observe(viewport);
+  } else {
+    window.addEventListener('resize', () => go(i));
+  }
+
+  go(0);
+})();
   </script>
 </body>
 </html>
