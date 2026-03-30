@@ -395,32 +395,50 @@
 
       /* ===== NAVBAR ===== */
       .navbar-wrap {
-        top: calc(env(safe-area-inset-top, 0px) + 24px);
-        width: calc(100% - 40px);
+        top: calc(env(safe-area-inset-top, 0px) + 12px);
+        width: calc(100% - 32px);
+        max-width: none;
+        overflow: visible;
       }
       .navbar {
-        padding: 16px 32px !important;
+        position: relative;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 12px 16px !important;
         border-radius: 50px !important;
         gap: 0 !important;
         justify-content: space-between !important;
         display: flex !important;
         align-items: center !important;
+        flex-wrap: nowrap !important;
+        overflow: visible !important;
       }
-      .logo-img { height: 28px !important; display: block !important; }
+      .logo-img {
+        height: 28px !important;
+        display: block !important;
+        flex: 0 0 auto;
+      }
       .logo-text { display: none !important; }
       .nav-links:not(.open) { display: none !important; }
       .nav-links.open {
-        display: flex; flex-direction: column;
-        position: fixed; top: calc(env(safe-area-inset-top, 0px) + 24px + 80px); left: 20px; right: 20px;
-        background: rgba(23,25,28,.92);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: calc(100% + 10px);
+        left: 0;
+        right: 0;
+        background: rgba(23,25,28,.96);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         border: 1px solid rgba(255,255,255,.10);
         border-radius: 18px;
         padding: 10px;
         gap: 8px;
-        z-index: 9999;
+        z-index: 10000;
         box-shadow: 0 20px 70px rgba(0,0,0,.55);
+        max-height: min(72vh, 520px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
       }
       .nav-links.open::before {
         content: "";
@@ -467,7 +485,23 @@
         border-color: rgba(217,255,0,.35);
       }
       .nav-links.open a:active { transform: scale(.99); }
-      .hamburger { display: flex !important; }
+      .hamburger {
+        display: flex !important;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex: 0 0 auto;
+        min-width: 44px;
+        min-height: 44px;
+        padding: 10px;
+        margin: 0;
+        border-radius: 12px;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .hamburger:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(217,255,0,.25);
+      }
       .btn-primary-nav { display: none !important; }
 
       /* ===== HERO ===== */
@@ -1214,6 +1248,39 @@
       font-weight: 700;
     }
 
+    /* Vitrine de marcas / projetos — mesmo tratamento visual dos cards “tech” da landing formatada */
+    .section-escritorios__gallery {
+      margin-top: clamp(36px, 6vw, 56px);
+      width: 100%;
+    }
+
+    .section-escritorios__gallery-grid {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(16px, 2.5vw, 24px);
+    }
+
+    .section-escritorios__gallery-card {
+      margin: 0;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+      background: linear-gradient(165deg, rgba(255, 255, 255, 0.04) 0%, transparent 45%), var(--card);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
+      aspect-ratio: 1;
+    }
+
+    .section-escritorios__gallery-card img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
     /* Comparativo United × agências */
     .section-compare {
       width: 100%;
@@ -1680,6 +1747,25 @@
       margin: 0;
     }
 
+    @media (max-width: 639px) {
+      .section-escritorios__gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        max-width: 22rem;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    @media (min-width: 640px) and (max-width: 900px) {
+      .section-escritorios__gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        max-width: 42rem;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
     @media (max-width: 900px) {
       .section-escritorios__copy {
         max-width: 32rem;
@@ -1690,6 +1776,10 @@
         max-width: 26rem;
         margin: 0 auto;
         gap: 36px;
+      }
+
+      .section-escritorios__gallery {
+        margin-top: clamp(32px, 8vw, 48px);
       }
 
       .section-ecossistema {
@@ -1788,7 +1878,7 @@
   <div class="hero-inner">
     <div class="hero-col hero-col--copy">
       <img class="hero-mark" src="assets/hero-mark.png" alt="" aria-hidden="true" />
-      <p class="hero-badge"><span class="dot"></span> Seja bem vindo a United! 👋</p>
+      <p class="hero-badge"><span class="dot"></span> Oportunidade para novos Sócios! 👋</p>
 
       <h1>Seja dono de uma franquia da United em assessoria de marketing.</h1>
 
@@ -1809,7 +1899,7 @@
 
       <div class="hero-cta">
         <a href="#contact" class="btn-primary">
-          AGENDAR DIAGNÓSTICO GRATUITO
+          Quero fazer negócio com a UNITED
           <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"/></svg>
         </a>
       </div>
@@ -1867,10 +1957,8 @@
     <section class="card" id="contact">
       <article class="left">
         <div class="services-left">
-          <p class="label">Services</p>
           <h2 class="services-title">Seja dono de um<br>escritório United</h2>
           <a href="#about" class="services-link">
-            <span>Nossos Serviços</span>
             <span class="arrow-ball">→</span>
           </a>
         </div>
@@ -1905,7 +1993,7 @@
         <img src="assets/section-assessoria.png" alt="Interior do escritório Agência United: ambiente moderno com iluminação e identidade visual da marca.">
       </div>
       <div class="section-assessoria__copy">
-        <h2 id="assessoria-heading" class="section-assessoria__title">A maior Assessoria de Marketing do Brasil está selecionando novos sócios-executivos</h2>
+        <h2 id="assessoria-heading" class="section-assessoria__title"> Estamos selecionando novos sócios executivos </h2>
         <div class="section-assessoria__rule" role="presentation"></div>
         <p class="section-assessoria__body">Sim, é assim que tratamos nossos franqueados: como sócios. Eles constroem esse negócio com a gente, e se você quiser, pode fazer parte disso também.</p>
       </div>
@@ -1945,6 +2033,37 @@
             <p>Sem limite de <strong>faturamento</strong></p>
           </li>
         </ul>
+        <div class="section-escritorios__gallery" aria-label="Exemplos de projetos e identidades para escritórios parceiros">
+          <ul class="section-escritorios__gallery-grid">
+            <li class="section-escritorios__gallery-card">
+              <img src="assets/escritorios-showcase-01.png" alt="Fachada moderna de negócio com marca em destaque." width="480" height="480" loading="lazy" decoding="async">
+            </li>
+            <li class="section-escritorios__gallery-card">
+              <img src="assets/escritorios-showcase-02.png" alt="Material institucional premium para serviços financeiros." width="480" height="480" loading="lazy" decoding="async">
+            </li>
+            <li class="section-escritorios__gallery-card">
+              <img src="assets/escritorios-showcase-03.png" alt="Stand e vitrine corporativa em estilo premium." width="480" height="480" loading="lazy" decoding="async">
+            </li>
+            <li class="section-escritorios__gallery-card">
+              <img src="assets/escritorios-showcase-04.png" alt="Identidade visual e papelaria corporativa." width="480" height="480" loading="lazy" decoding="async">
+            </li>
+            <li class="section-escritorios__gallery-card">
+              <img src="assets/escritorios-showcase-05.png" alt="Mockup de marca em materiais de escritório." width="480" height="480" loading="lazy" decoding="async">
+            </li>
+            <li class="section-escritorios__gallery-card">
+              <img src="assets/escritorios-showcase-06.png" alt="Produtos e brindes com marca aplicada." width="480" height="480" loading="lazy" decoding="async">
+            </li>
+            <li class="section-escritorios__gallery-card">
+              <img src="assets/escritorios-showcase-07.png" alt="Embalagem e identidade de produto." width="480" height="480" loading="lazy" decoding="async">
+            </li>
+            <li class="section-escritorios__gallery-card">
+              <img src="assets/escritorios-showcase-08.png" alt="Apresentação de marca em evento corporativo." width="480" height="480" loading="lazy" decoding="async">
+            </li>
+            <li class="section-escritorios__gallery-card">
+              <img src="assets/escritorios-showcase-09.png" alt="Ambiente de escritório com identidade digital em destaque." width="480" height="480" loading="lazy" decoding="async">
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
@@ -2039,7 +2158,7 @@
       <div class="section-ecossistema__col section-ecossistema__col--lead">
         <header class="section-ecossistema__head">
           <p class="section-ecossistema__kicker">Ecossistema United</p>
-          <h2 id="ecossistema-heading" class="section-ecossistema__title">Faça parte do maior Ecossistema de marketing do país</h2>
+          <h2 id="ecossistema-heading" class="section-ecossistema__title">Seja dono de um ecossistema de mar</h2>
           <div class="section-ecossistema__divider" role="presentation"></div>
           <p class="section-ecossistema__body">Seja dono (a) do seu próprio negócio. Se aproxime dos empresários mais relevantes do Brasil. Construa uma rede de contatos valiosa.</p>
           <p class="section-ecossistema__body section-ecossistema__intro-vertentes">Quatro vertentes para atuar com foco — cada uma com método, narrativa e oferta próprios.</p>
