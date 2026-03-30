@@ -1159,119 +1159,76 @@
       font-weight: 700;
     }
 
-    /* Carrossel — vitrine escritórios */
+    /* Carrossel vitrine escritórios — mesmo estilo que index.referencia.html (.gal-*) */
     .section-escritorios__carousel {
       margin-top: clamp(36px, 6vw, 56px);
       width: 100%;
-      max-width: min(440px, 100%);
-      margin-left: auto;
-      margin-right: auto;
+      max-width: 100%;
       position: relative;
     }
 
-    .section-escritorios__car-viewport {
+    .gal-track-wrap {
       overflow: hidden;
-      border-radius: 18px;
-      border: 1px solid var(--card-border);
-      background: linear-gradient(165deg, rgba(255, 255, 255, 0.04) 0%, transparent 45%), var(--card);
-      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
-      aspect-ratio: 1;
+      padding: 0 60px;
     }
 
-    .section-escritorios__car-track {
+    .gal-track {
       display: flex;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+      gap: 24px;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .section-escritorios__car-slide {
-      flex: 0 0 100%;
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      list-style: none;
+    .gal-item {
+      flex-shrink: 0;
+      width: 640px;
+      height: 640px;
+      border-radius: 24px;
+      overflow: hidden;
     }
 
-    .section-escritorios__car-slide img {
-      display: block;
+    .gal-item img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center;
+      display: block;
     }
 
-    .section-escritorios__car-btn {
+    .gal-arrow {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      width: 44px;
-      height: 44px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.15);
-      background: rgba(23, 25, 28, 0.88);
       color: #fff;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 2;
-      transition: background 0.2s ease, color 0.2s ease;
+      transition: background 0.2s, color 0.2s;
+      z-index: 10;
+      padding: 0;
       -webkit-tap-highlight-color: transparent;
     }
 
-    .section-escritorios__car-btn svg {
-      width: 22px;
-      height: 22px;
-    }
-
-    .section-escritorios__car-btn:hover {
+    .gal-arrow:hover {
       background: var(--accent);
       color: #000;
     }
 
-    .section-escritorios__car-btn:focus-visible {
+    .gal-arrow:hover svg {
+      stroke: #000;
+    }
+
+    .gal-arrow:focus-visible {
       outline: 2px solid var(--accent);
       outline-offset: 2px;
     }
 
-    .section-escritorios__car-btn--prev { left: 8px; }
-    .section-escritorios__car-btn--next { right: 8px; }
-
-    .section-escritorios__car-dots {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 14px 0 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .section-escritorios__car-dots li {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .section-escritorios__car-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      border: none;
-      padding: 0;
-      background: rgba(255, 255, 255, 0.22);
-      cursor: pointer;
-      transition: background 0.2s ease, transform 0.2s ease;
-    }
-
-    .section-escritorios__car-dot.is-active {
-      background: var(--accent);
-      transform: scale(1.15);
-    }
+    .gal-prev { left: 12px; }
+    .gal-next { right: 12px; }
 
     /* Entenda o nosso diferencial (referência) */
     .comparison-section {
@@ -2113,6 +2070,15 @@
         gap: 36px;
       }
 
+      .gal-track-wrap {
+        padding: 0 20px !important;
+      }
+
+      .gal-item {
+        width: min(360px, calc(100vw - 80px)) !important;
+        height: min(360px, calc(100vw - 80px)) !important;
+      }
+
       #servicos {
         padding: 48px clamp(20px, 5.5vw, 28px) !important;
       }
@@ -2309,55 +2275,44 @@
           </li>
         </ul>
         <div class="section-escritorios__gallery" aria-label="Exemplos de projetos e identidades para escritórios parceiros">
-          <div class="section-escritorios__carousel" data-escritorios-carousel>
-            <div class="section-escritorios__car-viewport">
-              <ul class="section-escritorios__car-track">
-                <li class="section-escritorios__car-slide">
-                  <img src="assets/escritorios-showcase-01.png" alt="Fachada moderna de negócio com marca em destaque." width="480" height="480" loading="lazy" decoding="async">
-                </li>
-                <li class="section-escritorios__car-slide">
-                  <img src="assets/escritorios-showcase-02.png" alt="Material institucional premium para serviços financeiros." width="480" height="480" loading="lazy" decoding="async">
-                </li>
-                <li class="section-escritorios__car-slide">
-                  <img src="assets/escritorios-showcase-03.png" alt="Stand e vitrine corporativa em estilo premium." width="480" height="480" loading="lazy" decoding="async">
-                </li>
-                <li class="section-escritorios__car-slide">
-                  <img src="assets/escritorios-showcase-04.png" alt="Identidade visual e papelaria corporativa." width="480" height="480" loading="lazy" decoding="async">
-                </li>
-                <li class="section-escritorios__car-slide">
-                  <img src="assets/escritorios-showcase-05.png" alt="Mockup de marca em materiais de escritório." width="480" height="480" loading="lazy" decoding="async">
-                </li>
-                <li class="section-escritorios__car-slide">
-                  <img src="assets/escritorios-showcase-06.png" alt="Produtos e brindes com marca aplicada." width="480" height="480" loading="lazy" decoding="async">
-                </li>
-                <li class="section-escritorios__car-slide">
-                  <img src="assets/escritorios-showcase-07.png" alt="Embalagem e identidade de produto." width="480" height="480" loading="lazy" decoding="async">
-                </li>
-                <li class="section-escritorios__car-slide">
-                  <img src="assets/escritorios-showcase-08.png" alt="Apresentação de marca em evento corporativo." width="480" height="480" loading="lazy" decoding="async">
-                </li>
-                <li class="section-escritorios__car-slide">
-                  <img src="assets/escritorios-showcase-09.png" alt="Ambiente de escritório com identidade digital em destaque." width="480" height="480" loading="lazy" decoding="async">
-                </li>
-              </ul>
+          <div class="section-escritorios__carousel">
+            <div class="gal-track-wrap">
+              <div class="gal-track" id="escritoriosGalTrack">
+                <div class="gal-item">
+                  <img src="assets/escritorios-showcase-01.png" alt="Fachada moderna de negócio com marca em destaque." width="640" height="640" loading="lazy" decoding="async">
+                </div>
+                <div class="gal-item">
+                  <img src="assets/escritorios-showcase-02.png" alt="Material institucional premium para serviços financeiros." width="640" height="640" loading="lazy" decoding="async">
+                </div>
+                <div class="gal-item">
+                  <img src="assets/escritorios-showcase-03.png" alt="Stand e vitrine corporativa em estilo premium." width="640" height="640" loading="lazy" decoding="async">
+                </div>
+                <div class="gal-item">
+                  <img src="assets/escritorios-showcase-04.png" alt="Identidade visual e papelaria corporativa." width="640" height="640" loading="lazy" decoding="async">
+                </div>
+                <div class="gal-item">
+                  <img src="assets/escritorios-showcase-05.png" alt="Mockup de marca em materiais de escritório." width="640" height="640" loading="lazy" decoding="async">
+                </div>
+                <div class="gal-item">
+                  <img src="assets/escritorios-showcase-06.png" alt="Produtos e brindes com marca aplicada." width="640" height="640" loading="lazy" decoding="async">
+                </div>
+                <div class="gal-item">
+                  <img src="assets/escritorios-showcase-07.png" alt="Embalagem e identidade de produto." width="640" height="640" loading="lazy" decoding="async">
+                </div>
+                <div class="gal-item">
+                  <img src="assets/escritorios-showcase-08.png" alt="Apresentação de marca em evento corporativo." width="640" height="640" loading="lazy" decoding="async">
+                </div>
+                <div class="gal-item">
+                  <img src="assets/escritorios-showcase-09.png" alt="Ambiente de escritório com identidade digital em destaque." width="640" height="640" loading="lazy" decoding="async">
+                </div>
+              </div>
             </div>
-            <button type="button" class="section-escritorios__car-btn section-escritorios__car-btn--prev" aria-label="Imagem anterior">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 6l-6 6 6 6"/></svg>
+            <button type="button" class="gal-arrow gal-prev" aria-label="Imagem anterior">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M15 18l-6-6 6-6"/></svg>
             </button>
-            <button type="button" class="section-escritorios__car-btn section-escritorios__car-btn--next" aria-label="Próxima imagem">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
+            <button type="button" class="gal-arrow gal-next" aria-label="Próxima imagem">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M9 18l6-6-6-6"/></svg>
             </button>
-            <ul class="section-escritorios__car-dots">
-              <li><button type="button" class="section-escritorios__car-dot is-active" data-escritorios-dot="0" aria-label="Ir para imagem 1 de 9"></button></li>
-              <li><button type="button" class="section-escritorios__car-dot" data-escritorios-dot="1" aria-label="Ir para imagem 2 de 9"></button></li>
-              <li><button type="button" class="section-escritorios__car-dot" data-escritorios-dot="2" aria-label="Ir para imagem 3 de 9"></button></li>
-              <li><button type="button" class="section-escritorios__car-dot" data-escritorios-dot="3" aria-label="Ir para imagem 4 de 9"></button></li>
-              <li><button type="button" class="section-escritorios__car-dot" data-escritorios-dot="4" aria-label="Ir para imagem 5 de 9"></button></li>
-              <li><button type="button" class="section-escritorios__car-dot" data-escritorios-dot="5" aria-label="Ir para imagem 6 de 9"></button></li>
-              <li><button type="button" class="section-escritorios__car-dot" data-escritorios-dot="6" aria-label="Ir para imagem 7 de 9"></button></li>
-              <li><button type="button" class="section-escritorios__car-dot" data-escritorios-dot="7" aria-label="Ir para imagem 8 de 9"></button></li>
-              <li><button type="button" class="section-escritorios__car-dot" data-escritorios-dot="8" aria-label="Ir para imagem 9 de 9"></button></li>
-            </ul>
           </div>
         </div>
       </div>
@@ -2643,49 +2598,51 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeMenu();
 });
 
-(function initEscritoriosCarousel() {
-  const root = document.querySelector('[data-escritorios-carousel]');
-  if (!root) return;
-  const viewport = root.querySelector('.section-escritorios__car-viewport');
-  const track = root.querySelector('.section-escritorios__car-track');
-  const slides = root.querySelectorAll('.section-escritorios__car-slide');
-  const prevBtn = root.querySelector('.section-escritorios__car-btn--prev');
-  const nextBtn = root.querySelector('.section-escritorios__car-btn--next');
-  const dots = root.querySelectorAll('.section-escritorios__car-dot');
-  const n = slides.length;
-  if (!viewport || !track || n === 0) return;
+(function initEscritoriosGal() {
+  var GAP = 24;
+  var galIndex = 0;
+  var track = document.getElementById('escritoriosGalTrack');
+  var wrap = track && track.parentElement;
+  var root = document.querySelector('.section-escritorios__carousel');
+  var prevBtn = root && root.querySelector('.gal-prev');
+  var nextBtn = root && root.querySelector('.gal-next');
+  if (!track || !wrap || !prevBtn || !nextBtn) return;
 
-  let i = 0;
-
-  function syncDots() {
-    dots.forEach((d, j) => d.classList.toggle('is-active', j === i));
+  function metrics() {
+    var items = track.querySelectorAll('.gal-item');
+    if (!items.length) return null;
+    var itemW = items[0].offsetWidth + GAP;
+    if (itemW <= GAP) return null;
+    var visible = Math.max(1, Math.floor((wrap.clientWidth + GAP) / itemW));
+    var maxIndex = Math.max(0, items.length - visible);
+    return { itemW: itemW, maxIndex: maxIndex };
   }
 
-  function go(to) {
-    i = ((to % n) + n) % n;
-    const w = viewport.getBoundingClientRect().width;
-    track.style.transform = 'translateX(' + (-i * w) + 'px)';
-    syncDots();
+  function applyTransform() {
+    var m = metrics();
+    if (!m) return;
+    galIndex = Math.min(galIndex, m.maxIndex);
+    track.style.transform = 'translateX(' + (-galIndex * m.itemW) + 'px)';
   }
 
-  prevBtn?.addEventListener('click', () => go(i - 1));
-  nextBtn?.addEventListener('click', () => go(i + 1));
-  dots.forEach((d) => {
-    d.addEventListener('click', () => {
-      const j = parseInt(d.getAttribute('data-escritorios-dot'), 10);
-      if (!Number.isNaN(j)) go(j);
-    });
-  });
+  function move(dir) {
+    var m = metrics();
+    if (!m) return;
+    galIndex = Math.max(0, Math.min(galIndex + +dir, m.maxIndex));
+    track.style.transform = 'translateX(' + (-galIndex * m.itemW) + 'px)';
+  }
 
-  let ro;
+  prevBtn.addEventListener('click', function () { move(-1); });
+  nextBtn.addEventListener('click', function () { move(1); });
+  window.addEventListener('resize', applyTransform);
   if (typeof ResizeObserver !== 'undefined') {
-    ro = new ResizeObserver(() => go(i));
-    ro.observe(viewport);
-  } else {
-    window.addEventListener('resize', () => go(i));
+    var ro = new ResizeObserver(applyTransform);
+    ro.observe(wrap);
   }
-
-  go(0);
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(applyTransform);
+  }
+  applyTransform();
 })();
   </script>
 </body>
