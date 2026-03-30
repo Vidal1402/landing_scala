@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #070708;
@@ -24,9 +24,22 @@
       --field-border: rgba(255, 255, 255, 0.1);
       --accent-lime: #e2ff00;
       --page-inline: 16px;
+      --eco-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
     }
 
     * { box-sizing: border-box; }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
 
     html {
       font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -115,7 +128,7 @@
     .headline__grad {
       display: inline-block;
       max-width: 100%;
-      font-size: clamp(40px, 5.8vw, 82px);
+      font-size: clamp(28px, 4.2vw, 56px);
       font-weight: 600;
       line-height: 1.06;
       background: linear-gradient(180deg, #a0a0a0 0%, #c4c4c4 35%, #efefef 70%, #ffffff 100%);
@@ -238,6 +251,45 @@
       transform: scale(0.99);
     }
 
+    /* CTAs das secções: mesma escala do botão do formulário (hero) */
+    .section-social-proof__btn,
+    .section-clientes__btn,
+    .section-ecossistema__btn,
+    .section-tech__btn {
+      width: auto;
+      display: inline-block;
+      margin: 0;
+      height: 49px;
+      padding: 0 14px;
+      font-size: clamp(15px, 1vw, 17px);
+      line-height: 1.2;
+      letter-spacing: 0.06em;
+      border-radius: 10px;
+      border: none;
+      font-family: inherit;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #0a0a0b;
+      background: var(--accent-lime);
+      cursor: pointer;
+      box-sizing: border-box;
+      transition: filter 0.2s ease, transform 0.15s ease;
+    }
+
+    .section-social-proof__btn:hover,
+    .section-clientes__btn:hover,
+    .section-ecossistema__btn:hover,
+    .section-tech__btn:hover {
+      filter: brightness(1.05);
+    }
+
+    .section-social-proof__btn:active,
+    .section-clientes__btn:active,
+    .section-ecossistema__btn:active,
+    .section-tech__btn:active {
+      transform: scale(0.99);
+    }
+
     /* Padrão igual ao referência (grade 3×3, 38px) — cores limão + preto transparente */
     .pixel {
       position: absolute;
@@ -349,15 +401,15 @@
     /* Tablet / mobile: card em coluna única, tipografia fluida */
     @media (max-width: 960px) {
       :root {
-        --page-inline: 14px;
+        --page-inline: 20px;
       }
 
       .page {
-        padding: 28px var(--page-inline) 32px;
+        padding: 36px var(--page-inline) 44px;
       }
 
       .logo {
-        margin: 0 0 20px;
+        margin: 0 0 28px;
       }
 
       .logo img {
@@ -368,14 +420,14 @@
       .card {
         width: min(950px, calc(100vw - 2 * var(--page-inline)));
         grid-template-columns: 1fr;
-        gap: 0;
-        padding: 16px 14px 14px;
+        gap: 28px;
+        padding: 24px 18px 28px;
         border-radius: 16px;
       }
 
       .hero-image {
         border-radius: 14px;
-        margin-bottom: 14px;
+        margin-bottom: 22px;
       }
 
       .hero-image img {
@@ -384,34 +436,37 @@
 
       .headline {
         text-align: center;
-        margin-bottom: 10px;
+        margin-bottom: 18px;
       }
 
       .headline__grad {
-        font-size: clamp(2rem, 8.2vw, 3.05rem);
+        font-size: clamp(1.55rem, 6.5vw, 2.35rem);
       }
 
       .desc {
         text-align: center;
         font-size: clamp(1.05rem, 4.4vw, 1.28rem);
-        line-height: 1.45;
+        line-height: 1.55;
         max-width: 100%;
+        margin-top: 6px;
       }
 
       .mobile-extra {
         display: block;
         font-size: clamp(1rem, 4.1vw, 1.18rem);
-        margin-top: 16px;
+        margin-top: 22px;
+        line-height: 1.4;
       }
 
       .star { display: flex; }
 
       .right {
-        margin-top: 12px;
+        margin-top: 4px;
       }
 
       .right form {
         min-height: 0;
+        gap: 16px;
       }
 
       input,
@@ -421,21 +476,33 @@
       }
 
       button {
-        margin-top: 10px;
-        min-height: 48px;
+        margin-top: 8px;
+        min-height: 52px;
         height: auto;
-        padding: 12px 14px;
+        padding: 14px 16px;
+        font-size: clamp(0.8125rem, 3.1vw, 0.9375rem);
+        white-space: normal;
+      }
+
+      .section-social-proof__btn,
+      .section-clientes__btn,
+      .section-ecossistema__btn,
+      .section-tech__btn {
+        margin-top: 0;
+        min-height: 52px;
+        height: auto;
+        padding: 14px 16px;
         font-size: clamp(0.8125rem, 3.1vw, 0.9375rem);
         white-space: normal;
       }
 
       .section-assessoria {
-        padding: clamp(40px, 10vw, 52px) var(--page-inline) clamp(44px, 10vw, 56px);
+        padding: clamp(52px, 12vw, 72px) var(--page-inline) clamp(56px, 12vw, 76px);
       }
 
       .section-assessoria__inner {
         grid-template-columns: 1fr;
-        gap: clamp(24px, 6vw, 36px);
+        gap: clamp(36px, 9vw, 48px);
       }
 
       .section-assessoria__copy {
@@ -444,50 +511,74 @@
         margin: 0 auto;
       }
 
+      .section-assessoria__title {
+        margin-bottom: 18px;
+        font-size: clamp(1.32rem, 5.4vw, 1.9rem);
+      }
+
+      .section-assessoria__rule {
+        margin-top: 0;
+        margin-bottom: 22px;
+      }
+
       .section-assessoria__body {
         margin-left: auto;
         margin-right: auto;
         font-size: clamp(1.02rem, 4vw, 1.2rem);
+        line-height: 1.58;
       }
 
       .section-assessoria__media {
         max-width: min(100%, 400px);
       }
 
-      .section-assessoria__title {
-        font-size: clamp(1.32rem, 5.4vw, 1.9rem);
+      .section-escritorios {
+        padding: clamp(52px, 12vw, 88px) clamp(20px, 5vw, 28px);
+      }
+
+      .section-escritorios__inner {
+        gap: clamp(40px, 10vw, 56px);
       }
 
       .section-escritorios__title {
         font-size: clamp(1.4rem, 5.5vw, 2rem);
+        margin-bottom: 18px;
+      }
+
+      .section-escritorios__rule {
+        margin-bottom: 22px;
       }
 
       .section-escritorios__lead {
         font-size: clamp(1.02rem, 4vw, 1.18rem);
+        line-height: 1.58;
+        margin-bottom: clamp(28px, 6vw, 36px);
       }
 
       .section-escritorios__feature p {
         font-size: clamp(1.12rem, 4.8vw, 1.38rem);
+        line-height: 1.45;
       }
 
       .section-escritorios__icon {
         width: clamp(64px, 16vw, 88px);
         height: clamp(64px, 16vw, 88px);
-        margin-bottom: 16px;
+        margin-bottom: 18px;
       }
     }
 
     @media (max-width: 480px) {
       :root {
-        --page-inline: 12px;
+        --page-inline: 18px;
       }
 
       .page {
-        padding: 22px var(--page-inline) 28px;
+        padding: 30px var(--page-inline) 40px;
       }
 
       .card {
-        padding: 14px 12px 12px;
+        padding: 22px 16px 26px;
+        gap: 26px;
       }
     }
 
@@ -498,7 +589,7 @@
       }
 
       .headline__grad {
-        font-size: clamp(1.75rem, 3.4vw, 3rem);
+        font-size: clamp(1.45rem, 2.75vw, 2.35rem);
       }
 
       .desc {
@@ -680,6 +771,140 @@
       color: #111;
     }
 
+    /* Comece com clientes — padrão United (limão + Plus Jakarta herdada) */
+    .section-clientes {
+      width: 100%;
+      background: linear-gradient(165deg, #080808 0%, #121212 42%, #070708 100%);
+      color: var(--text);
+      padding: clamp(52px, 8vw, 96px) clamp(18px, 4vw, 48px);
+      padding-bottom: clamp(64px, 10vw, 112px);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-clientes::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 90% 55% at 50% -25%, rgba(226, 255, 0, 0.08), transparent 52%),
+        radial-gradient(ellipse 45% 50% at 0% 30%, rgba(226, 255, 0, 0.04), transparent 50%);
+      pointer-events: none;
+    }
+
+    .section-clientes__inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1140px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: clamp(32px, 5vw, 56px);
+      align-items: center;
+    }
+
+    .section-clientes__title {
+      margin: 0;
+      font-size: clamp(1.45rem, 3vw, 2.15rem);
+      font-weight: 700;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      max-width: 16em;
+    }
+
+    .section-clientes__rule {
+      width: min(140px, 42vw);
+      height: 3px;
+      margin: clamp(16px, 2vw, 22px) 0 clamp(18px, 2.2vw, 24px);
+      border: 0;
+      background: #e2ff00;
+    }
+
+    .section-clientes__desc {
+      margin: 0 0 clamp(24px, 3.5vw, 32px);
+      font-size: clamp(0.92rem, 1.4vw, 1.08rem);
+      line-height: 1.55;
+      color: var(--text-soft);
+      max-width: 36em;
+    }
+
+    .section-clientes__cards {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(18px, 3vw, 24px);
+      min-width: 0;
+    }
+
+    .cliente-card {
+      position: relative;
+      border-radius: 18px;
+      padding: clamp(20px, 3vw, 26px);
+      background: linear-gradient(165deg, rgba(255, 255, 255, 0.04) 0%, transparent 45%), var(--card);
+      border: 1px solid var(--card-border);
+      overflow: hidden;
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
+    }
+
+    .cliente-card::before {
+      content: "";
+      position: absolute;
+      top: -45%;
+      left: -35%;
+      width: 75%;
+      height: 85%;
+      background: radial-gradient(circle, rgba(226, 255, 0, 0.22) 0%, rgba(226, 255, 0, 0.06) 45%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cliente-card--shift-left {
+      margin-right: clamp(0px, 8vw, 48px);
+    }
+
+    .cliente-card--shift-right {
+      margin-left: clamp(0px, 8vw, 48px);
+    }
+
+    .cliente-card__title-row {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 12px;
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+      font-weight: 700;
+      color: var(--accent-lime);
+    }
+
+    .cliente-card__badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .cliente-card__badge svg {
+      display: block;
+      width: 22px;
+      height: 22px;
+    }
+
+    .cliente-card__body {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      font-size: clamp(0.88rem, 1.25vw, 1rem);
+      line-height: 1.5;
+      color: var(--text-soft);
+    }
+
+    .cliente-card__body strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+
     /* Comparativo United × agências */
     .section-compare {
       width: 100%;
@@ -710,13 +935,22 @@
 
     .section-compare__title {
       text-align: center;
-      font-size: clamp(1.35rem, 3.2vw, 2.05rem);
-      font-weight: 700;
-      line-height: 1.22;
+      line-height: 1.2;
       margin: 0 auto clamp(12px, 2vw, 18px);
-      letter-spacing: 0.02em;
-      max-width: 22em;
-      color: #fafafa;
+      letter-spacing: -0.02em;
+      max-width: 24em;
+    }
+
+    .section-compare__title-grad {
+      display: inline;
+      font-size: clamp(1.7rem, 4vw, 2.85rem);
+      font-weight: 700;
+      line-height: 1.2;
+      background: linear-gradient(180deg, #a0a0a0 0%, #c4c4c4 35%, #efefef 70%, #ffffff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
     }
 
     .section-compare__subtitle {
@@ -836,25 +1070,399 @@
     }
 
     @media (max-width: 720px) {
+      .section-compare {
+        padding: clamp(56px, 12vw, 92px) clamp(20px, 5.5vw, 28px);
+      }
+
       .section-compare__title,
       .section-compare__subtitle {
-        padding-inline: clamp(4px, 1.5vw, 12px);
+        padding-inline: clamp(6px, 2vw, 14px);
+      }
+
+      .section-compare__title {
+        margin-bottom: clamp(16px, 3.5vw, 22px);
+      }
+
+      .section-compare__title-grad {
+        font-size: clamp(1.5rem, 5.5vw, 2.15rem);
+        line-height: 1.22;
+      }
+
+      .section-compare__subtitle {
+        margin-bottom: clamp(40px, 9vw, 56px);
+        line-height: 1.58;
       }
 
       .compare-cards {
         grid-template-columns: 1fr;
-        gap: 28px;
+        gap: 36px;
         max-width: 28rem;
+      }
+
+      .compare-cards__label {
+        margin-bottom: clamp(14px, 3vw, 18px);
+      }
+
+      .compare-cards__label--united {
+        margin-bottom: clamp(14px, 3vw, 18px);
+      }
+
+      .compare-cards__list {
+        gap: clamp(16px, 3.2vw, 22px);
       }
 
       .compare-cards__item {
         font-size: clamp(0.85rem, 3.4vw, 0.95rem);
-        gap: 10px;
+        gap: 14px;
+        line-height: 1.52;
       }
 
       .compare-cards__panel {
-        padding: clamp(18px, 4vw, 22px);
+        padding: clamp(22px, 5vw, 28px);
         border-radius: 16px;
+      }
+    }
+
+    /* Ecossistema — peça editorial: serif + coluna fixa + lista sem container */
+    .section-ecossistema {
+      width: 100%;
+      background: #070708;
+      color: var(--text);
+      padding: clamp(72px, 12vw, 120px) clamp(20px, 4vw, 48px);
+      padding-bottom: clamp(72px, 14vw, 128px);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-ecossistema::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 55% 80% at 100% 0%, rgba(200, 25, 47, 0.045), transparent 58%);
+      pointer-events: none;
+    }
+
+    .section-ecossistema__inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      gap: clamp(40px, 7vw, 88px);
+      align-items: start;
+    }
+
+    .section-ecossistema__col--lead {
+      position: sticky;
+      top: max(1.5rem, env(safe-area-inset-top));
+    }
+
+    .section-ecossistema__head {
+      text-align: left;
+      max-width: 32rem;
+      margin: 0 0 clamp(28px, 5vw, 40px);
+    }
+
+    .section-ecossistema__kicker {
+      margin: 0 0 1rem;
+      font-family: inherit;
+      font-size: 0.625rem;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(244, 244, 245, 0.38);
+    }
+
+    .section-ecossistema__title {
+      font-family: var(--eco-serif);
+      font-weight: 400;
+      margin: 0 0 clamp(1.25rem, 2.5vw, 1.75rem);
+      font-size: clamp(1.85rem, 4.2vw, 3.1rem);
+      line-height: 1.05;
+      letter-spacing: -0.018em;
+      color: rgba(252, 252, 253, 0.96);
+      max-width: none;
+    }
+
+    .section-ecossistema__divider {
+      width: 3.5rem;
+      height: 1px;
+      margin: 0 0 clamp(1.35rem, 2.4vw, 1.65rem);
+      border: 0;
+      background: linear-gradient(90deg, rgba(226, 255, 0, 0.75), rgba(226, 255, 0, 0));
+    }
+
+    .section-ecossistema__body {
+      margin: 0 0 clamp(1rem, 2vw, 1.25rem);
+      font-size: clamp(0.9rem, 1.25vw, 1rem);
+      line-height: 1.68;
+      color: rgba(244, 244, 245, 0.58);
+      font-weight: 400;
+      max-width: none;
+    }
+
+    .section-ecossistema__intro-vertentes {
+      margin: 0;
+      font-size: clamp(0.8125rem, 1.1vw, 0.9375rem);
+      line-height: 1.65;
+      color: rgba(244, 244, 245, 0.42);
+      font-weight: 400;
+    }
+
+    .section-ecossistema__cta-wrap {
+      text-align: left;
+      padding-top: 0.25rem;
+    }
+
+    .eco-atlas {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.09);
+    }
+
+    .eco-atlas__item {
+      display: grid;
+      grid-template-columns: 3rem minmax(0, 1fr);
+      column-gap: 1.25rem;
+      row-gap: 0.45rem;
+      padding: clamp(1.65rem, 3.2vw, 2.15rem) 0;
+      align-items: start;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .eco-atlas__item:last-child {
+      border-bottom: none;
+    }
+
+    .eco-atlas__ix {
+      grid-column: 1;
+      grid-row: 1;
+      font-family: var(--eco-serif);
+      font-size: clamp(1rem, 1.6vw, 1.15rem);
+      font-weight: 500;
+      font-style: italic;
+      line-height: 1;
+      color: rgba(244, 244, 245, 0.22);
+      padding-top: 0.2em;
+      user-select: none;
+    }
+
+    .eco-atlas__title {
+      grid-column: 2;
+      grid-row: 1;
+      margin: 0;
+      font-family: var(--eco-serif);
+      font-size: clamp(1.22rem, 2.1vw, 1.48rem);
+      font-weight: 500;
+      letter-spacing: -0.015em;
+      line-height: 1.22;
+      color: rgba(252, 252, 253, 0.94);
+    }
+
+    .eco-atlas__desc {
+      grid-column: 2;
+      grid-row: 2;
+      margin: 0;
+      font-size: clamp(0.875rem, 1.12vw, 0.9375rem);
+      line-height: 1.72;
+      color: rgba(244, 244, 245, 0.52);
+      font-weight: 400;
+      max-width: 38rem;
+    }
+
+    .section-ecossistema.section-ecossistema--last {
+      padding-bottom: clamp(80px, 14vw, 132px);
+    }
+
+    /* Stack tecnológico */
+    .section-tech {
+      width: 100%;
+      background: linear-gradient(165deg, #080808 0%, #121212 42%, #070708 100%);
+      color: var(--text);
+      padding: clamp(56px, 10vw, 100px) clamp(20px, 4vw, 48px);
+      padding-bottom: clamp(56px, 10vw, 88px);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-tech::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 90% 55% at 50% -25%, rgba(226, 255, 0, 0.08), transparent 52%),
+        radial-gradient(ellipse 45% 50% at 100% 35%, rgba(226, 255, 0, 0.04), transparent 50%),
+        radial-gradient(ellipse 40% 45% at 0% 70%, rgba(200, 25, 47, 0.06), transparent 50%);
+      pointer-events: none;
+    }
+
+    .section-tech__inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-tech__head {
+      text-align: center;
+      max-width: 46rem;
+      margin: 0 auto clamp(40px, 6vw, 56px);
+    }
+
+    .section-tech__title {
+      margin: 0 0 clamp(18px, 3vw, 26px);
+      font-size: clamp(1.35rem, 3vw, 2.05rem);
+      font-weight: 700;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .section-tech__divider {
+      width: 100%;
+      height: 3px;
+      margin: 0 auto clamp(22px, 4vw, 32px);
+      border-radius: 2px;
+      border: 0;
+      background: #e2ff00;
+    }
+
+    .section-tech__sub {
+      margin: 0;
+      font-size: clamp(0.92rem, 1.4vw, 1.08rem);
+      line-height: 1.58;
+      color: var(--text-soft);
+      font-weight: 400;
+    }
+
+    .section-tech__sub strong {
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .section-tech__grid-shell {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      gap: clamp(10px, 2.5vw, 28px);
+      margin: 0 0 clamp(44px, 7vw, 64px);
+    }
+
+    .section-tech__pixels {
+      display: grid;
+      grid-template-columns: repeat(3, 11px);
+      grid-auto-rows: 11px;
+      gap: 5px;
+      align-self: center;
+      flex-shrink: 0;
+      opacity: 0.92;
+      pointer-events: none;
+    }
+
+    .section-tech__pixels span {
+      display: block;
+      border-radius: 1px;
+      background: var(--accent-lime);
+    }
+
+    .section-tech__pixels span.is-dim {
+      background: rgba(226, 255, 0, 0.38);
+    }
+
+    .section-tech__pixels span.is-faint {
+      background: rgba(226, 255, 0, 0.14);
+    }
+
+    .section-tech__pixels span.is-dark {
+      background: rgba(0, 0, 0, 0.28);
+    }
+
+    .section-tech__grid {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(20px, 3.2vw, 28px);
+      flex: 1;
+      min-width: 0;
+      max-width: 920px;
+    }
+
+    .tech-card {
+      background: linear-gradient(165deg, rgba(255, 255, 255, 0.04) 0%, transparent 45%), var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: clamp(22px, 4vw, 30px);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .tech-card::before {
+      content: "";
+      position: absolute;
+      top: -40%;
+      left: -30%;
+      width: 70%;
+      height: 75%;
+      background: radial-gradient(circle, rgba(226, 255, 0, 0.12) 0%, rgba(226, 255, 0, 0.04) 45%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .tech-card__logo {
+      position: relative;
+      z-index: 1;
+      margin: 0 0 clamp(14px, 2.5vw, 18px);
+      font-size: clamp(0.72rem, 1.05vw, 0.82rem);
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-lime);
+      line-height: 1.2;
+    }
+
+    .tech-card__text {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      font-size: clamp(0.84rem, 1.2vw, 0.94rem);
+      line-height: 1.55;
+      color: var(--text-soft);
+      font-weight: 400;
+    }
+
+    .section-tech__cta-wrap {
+      text-align: center;
+      padding-top: clamp(8px, 2vw, 16px);
+    }
+
+    @media (max-width: 900px) {
+      .section-tech__grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        max-width: 26rem;
+        margin: 0 auto;
+      }
+
+      .section-tech__pixels {
+        display: none;
+      }
+
+      .section-tech__grid-shell {
+        margin-bottom: clamp(40px, 10vw, 52px);
+      }
+    }
+
+    @media (min-width: 601px) and (max-width: 900px) {
+      .section-tech__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        max-width: 44rem;
+        gap: 22px;
       }
     }
 
@@ -954,31 +1562,10 @@
       text-align: center;
     }
 
-    .section-social-proof__btn {
-      display: inline-block;
-      background: var(--accent-lime);
-      color: #0a0a0b;
-      border: none;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 10px 22px;
-      font-size: 0.7rem;
-      line-height: 1.25;
-      cursor: pointer;
-      border-radius: 10px;
-      font-family: inherit;
-      transition: filter 0.2s ease;
-    }
-
-    .section-social-proof__btn:hover {
-      filter: brightness(1.06);
-    }
-
     @media (max-width: 900px) {
       .section-escritorios__inner {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 52px;
       }
 
       .section-escritorios__copy {
@@ -1001,7 +1588,7 @@
         grid-template-columns: 1fr;
         max-width: 26rem;
         margin: 0 auto;
-        gap: 26px;
+        gap: 36px;
       }
 
       .section-escritorios__collage {
@@ -1009,9 +1596,81 @@
         min-height: 340px;
       }
 
+      .section-ecossistema {
+        padding: clamp(56px, 14vw, 88px) clamp(20px, 5.5vw, 28px);
+        padding-bottom: clamp(64px, 16vw, 96px);
+      }
+
+      .section-ecossistema__inner {
+        grid-template-columns: 1fr;
+        gap: clamp(40px, 9vw, 56px);
+      }
+
+      .section-ecossistema__col--lead {
+        position: static;
+      }
+
+      .section-ecossistema__head {
+        text-align: center;
+        max-width: 28rem;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 0;
+      }
+
+      .section-ecossistema__title {
+        margin-bottom: 8px;
+      }
+
+      .section-ecossistema__divider {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 18px;
+        margin-bottom: 22px;
+      }
+
+      .section-ecossistema__body {
+        margin-bottom: 14px;
+      }
+
+      .section-ecossistema__cta-wrap {
+        text-align: center;
+      }
+
+      .eco-atlas__item {
+        grid-template-columns: 2.5rem minmax(0, 1fr);
+        column-gap: 0.9rem;
+        padding: clamp(1.4rem, 4vw, 1.75rem) 0;
+      }
+
+      .eco-atlas__desc {
+        max-width: none;
+      }
+
+      .section-tech {
+        padding: clamp(48px, 12vw, 80px) clamp(20px, 5.5vw, 28px);
+        padding-bottom: clamp(48px, 12vw, 72px);
+      }
+
+      .section-ecossistema.section-ecossistema--last {
+        padding-bottom: clamp(64px, 16vw, 96px);
+      }
+
+      .section-tech__head {
+        margin-bottom: clamp(32px, 8vw, 48px);
+      }
+
+      .section-tech__title {
+        margin-bottom: clamp(16px, 4vw, 22px);
+      }
+
+      .section-social-proof {
+        padding: clamp(56px, 14vw, 80px) clamp(20px, 5.5vw, 28px);
+      }
+
       .section-social-proof__inner {
         grid-template-columns: 1fr;
-        gap: 36px;
+        gap: 44px;
       }
 
       .section-social-proof__intro {
@@ -1023,6 +1682,7 @@
       .section-social-proof__title {
         margin-left: auto;
         margin-right: auto;
+        margin-bottom: 18px;
         font-size: clamp(1.2rem, 4.8vw, 1.65rem);
         max-width: none;
       }
@@ -1030,6 +1690,11 @@
       .section-social-proof__rule {
         margin-left: auto;
         margin-right: auto;
+        margin-bottom: 28px;
+      }
+
+      .section-social-proof__visual {
+        margin-top: 12px;
       }
 
       .section-social-proof__intro .section-social-proof__hero-img {
@@ -1040,13 +1705,14 @@
 
       .section-social-proof__stats {
         grid-template-columns: 1fr;
-        gap: 8px;
-        max-width: 22rem;
+        gap: 20px;
+        max-width: 24rem;
         margin: 0 auto;
       }
 
       .social-stat {
         text-align: center;
+        padding: 14px 0 18px;
       }
 
       .social-stat__value {
@@ -1057,15 +1723,68 @@
         margin-left: auto;
         margin-right: auto;
         max-width: 12rem;
+        margin-top: 14px;
+        margin-bottom: 14px;
       }
 
       .social-stat__desc {
         font-size: clamp(0.95rem, 3.8vw, 1.08rem);
+        line-height: 1.5;
       }
 
-      .section-social-proof__btn {
-        font-size: 0.75rem;
-        padding: 8px 20px;
+      .section-social-proof__cta-wrap {
+        padding-top: 44px;
+      }
+
+      .section-clientes {
+        padding: clamp(56px, 14vw, 88px) clamp(20px, 5.5vw, 28px);
+        padding-bottom: clamp(64px, 16vw, 96px);
+      }
+
+      .section-clientes__inner {
+        grid-template-columns: 1fr;
+        gap: 52px;
+      }
+
+      .section-clientes__copy {
+        text-align: center;
+        max-width: 32rem;
+        margin: 0 auto;
+      }
+
+      .section-clientes__title {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: none;
+        margin-bottom: 6px;
+      }
+
+      .section-clientes__rule {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 16px;
+        margin-bottom: 22px;
+      }
+
+      .section-clientes__desc {
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 28px;
+        line-height: 1.58;
+      }
+
+      .cliente-card--shift-left,
+      .cliente-card--shift-right {
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      .cliente-card {
+        padding: clamp(24px, 5vw, 28px);
+      }
+
+      .section-clientes__cards {
+        gap: 28px;
       }
     }
   </style>
@@ -1234,7 +1953,7 @@
       </defs>
     </svg>
     <div class="section-compare__inner">
-      <h2 id="compare-heading" class="section-compare__title">Por que a United e não outra franquia?</h2>
+      <h2 id="compare-heading" class="section-compare__title"><span class="section-compare__title-grad">Por que a United e não outra franquia?</span></h2>
       <p class="section-compare__subtitle">Veja o que você leva na prática ao lado de uma agência comum — e por que nosso modelo foi pensado para quem quer escalar com segurança.</p>
       <div class="compare-cards" role="region" aria-label="Comparativo entre outras agências e a United">
         <div class="compare-cards__column">
@@ -1307,6 +2026,142 @@
             </ul>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-clientes" aria-labelledby="clientes-heading">
+    <div class="section-clientes__inner">
+      <div class="section-clientes__copy">
+        <h2 id="clientes-heading" class="section-clientes__title">Comece com clientes para atender</h2>
+        <div class="section-clientes__rule" role="presentation"></div>
+        <p class="section-clientes__desc">Nosso time de dados e desenvolvimento passou meses projetando um sistema que permite com que você tenha clientes nos primeiros meses de operação.</p>
+        <button type="button" class="section-clientes__btn">QUERO ENTENDER MELHOR</button>
+      </div>
+      <div class="section-clientes__cards">
+        <article class="cliente-card cliente-card--shift-left">
+          <h3 class="cliente-card__title-row">
+            Autonomia
+            <span class="cliente-card__badge" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" fill="#e2ff00"/>
+                <path d="M7.5 12l3 3 6-6" stroke="#0a0a0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </h3>
+          <p class="cliente-card__body">Você <strong>escolhe as empresas com quem quer negociar</strong> ao invés de receber qualquer cliente.</p>
+        </article>
+        <article class="cliente-card cliente-card--shift-right">
+          <h3 class="cliente-card__title-row">
+            Comodidade
+            <span class="cliente-card__badge" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" fill="#e2ff00"/>
+                <path d="M7.5 12l3 3 6-6" stroke="#0a0a0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </h3>
+          <p class="cliente-card__body"><strong>Fazemos 80% do trabalho para você.</strong> As empresas já mostraram interesse, é só fechar negócio.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tech" aria-labelledby="tech-heading">
+    <div class="section-tech__inner">
+      <header class="section-tech__head">
+        <h2 id="tech-heading" class="section-tech__title">Quanto tempo você levaria para utilizar essa tecnologia por conta própria?</h2>
+        <div class="section-tech__divider" role="presentation"></div>
+        <p class="section-tech__sub">Investimos <strong>milhões de reais</strong> para implementar as mesmas tecnologias de gestão, vendas e marketing que empresas como <strong>Shell, BMW e Amazon</strong> usam</p>
+      </header>
+
+      <div class="section-tech__grid-shell">
+        <div class="section-tech__pixels" aria-hidden="true">
+          <span class="is-dim"></span><span></span><span class="is-faint"></span>
+          <span></span><span class="is-dark"></span><span class="is-dim"></span>
+          <span class="is-faint"></span><span></span><span></span>
+          <span class="is-dim"></span><span class="is-faint"></span><span class="is-dark"></span>
+        </div>
+
+        <ul class="section-tech__grid">
+          <li class="tech-card">
+            <p class="tech-card__logo">Salesforce</p>
+            <p class="tech-card__text">Personalize o engajamento do cliente para transformar interações em oportunidades de crescimento.</p>
+          </li>
+          <li class="tech-card">
+            <p class="tech-card__logo">SAP</p>
+            <p class="tech-card__text">A SAP oferece uma visão 360° dos seus negócios, facilitando a tomada de decisões estratégicas com dados confiáveis e em tempo real.</p>
+          </li>
+          <li class="tech-card">
+            <p class="tech-card__logo">Unbounce</p>
+            <p class="tech-card__text">Crie e otimize landing pages com facilidade para capturar leads sem depender de um desenvolvedor.</p>
+          </li>
+          <li class="tech-card">
+            <p class="tech-card__logo">Slack</p>
+            <p class="tech-card__text">O Slack centraliza a comunicação da sua equipe garantindo a execução dos projetos.</p>
+          </li>
+          <li class="tech-card">
+            <p class="tech-card__logo">Power BI</p>
+            <p class="tech-card__text">Com Power BI, transforme informações em insights visuais para tomar decisões baseadas em dados.</p>
+          </li>
+          <li class="tech-card">
+            <p class="tech-card__logo">Google Workspace</p>
+            <p class="tech-card__text">Ferramentas do Google para criar, comunicar e colaborar com todos em qualquer lugar do mundo, e sem limites.</p>
+          </li>
+        </ul>
+
+        <div class="section-tech__pixels" aria-hidden="true">
+          <span class="is-faint"></span><span></span><span class="is-dim"></span>
+          <span class="is-dark"></span><span></span><span class="is-faint"></span>
+          <span></span><span class="is-dim"></span><span></span>
+          <span></span><span class="is-dark"></span><span class="is-dim"></span>
+        </div>
+      </div>
+
+      <div class="section-tech__cta-wrap">
+        <button type="button" class="section-tech__btn">QUERO MAIS DETALHES</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-ecossistema section-ecossistema--last" aria-labelledby="ecossistema-heading">
+    <div class="section-ecossistema__inner">
+      <div class="section-ecossistema__col section-ecossistema__col--lead">
+        <header class="section-ecossistema__head">
+          <p class="section-ecossistema__kicker">Ecossistema United</p>
+          <h2 id="ecossistema-heading" class="section-ecossistema__title">Faça parte do maior Ecossistema de marketing do país</h2>
+          <div class="section-ecossistema__divider" role="presentation"></div>
+          <p class="section-ecossistema__body">Seja dono (a) do seu próprio negócio. Se aproxime dos empresários mais relevantes do Brasil. Construa uma rede de contatos valiosa.</p>
+          <p class="section-ecossistema__body section-ecossistema__intro-vertentes">Quatro vertentes para atuar com foco — cada uma com método, narrativa e oferta próprios.</p>
+        </header>
+        <div class="section-ecossistema__cta-wrap">
+          <button type="button" class="section-ecossistema__btn">QUERO MAIS DETALHES</button>
+        </div>
+      </div>
+
+      <div class="section-ecossistema__col section-ecossistema__col--atlas">
+        <ul class="eco-atlas" aria-label="Vertentes do ecossistema United">
+          <li class="eco-atlas__item">
+            <span class="eco-atlas__ix" aria-hidden="true">I</span>
+            <h3 class="eco-atlas__title">United Finance</h3>
+            <p class="eco-atlas__desc">Marketing e performance para bancos, seguradoras, fintechs e serviços financeiros — com mensagens alinhadas à regulação.</p>
+          </li>
+          <li class="eco-atlas__item">
+            <span class="eco-atlas__ix" aria-hidden="true">II</span>
+            <h3 class="eco-atlas__title">United IA</h3>
+            <p class="eco-atlas__desc">Tecnologia, desenvolvimento e agentes de inteligência artificial para automatizar e escalar a operação da sua agência.</p>
+          </li>
+          <li class="eco-atlas__item">
+            <span class="eco-atlas__ix" aria-hidden="true">III</span>
+            <h3 class="eco-atlas__title">United Food</h3>
+            <p class="eco-atlas__desc">Marketing para restaurantes, dark kitchens, franquias e delivery — demanda local, apps e reputação.</p>
+          </li>
+          <li class="eco-atlas__item">
+            <span class="eco-atlas__ix" aria-hidden="true">IV</span>
+            <h3 class="eco-atlas__title">United Imob</h3>
+            <p class="eco-atlas__desc">Leads, branding e performance para incorporadoras, construtoras e imobiliárias, do lançamento ao pós-venda.</p>
+          </li>
+        </ul>
       </div>
     </div>
   </section>
