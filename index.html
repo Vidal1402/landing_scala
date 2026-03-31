@@ -2340,23 +2340,47 @@
       </article>
 
       <aside class="right">
-        <form>
-          <input type="text" placeholder="* Nome">
-          <input type="email" placeholder="* E-mail">
-          <input type="tel" placeholder="* Telefone com DDD">
-          <select>
-            <option>* Qual sua atuação hoje?</option>
+        <form id="leadForm">
+          <input type="text" name="nome" placeholder="* Nome" required>
+          <input type="email" name="email" placeholder="* E-mail" required>
+          <input type="tel" name="telefone" placeholder="* Telefone com DDD" required>
+
+          <select name="atuacao" required>
+            <option value="" disabled selected>* Qual sua atuação hoje?</option>
+            <option>Sou empresário(a) e quero abrir uma unidade</option>
+            <option>Sou profissional de marketing autônomo</option>
+            <option>Tenho agência ou estúdio e quero escalar</option>
+            <option>Trabalho em outra área e quero migrar</option>
+            <option>Estou estudando possibilidades ainda</option>
           </select>
-          <select>
-            <option>* Quando você pretende assumir sua franquia?</option>
+
+          <select name="quando" required>
+            <option value="" disabled selected>* Quando você pretende assumir sua franquia?</option>
+            <option>Nos próximos 30 dias</option>
+            <option>Entre 1 e 3 meses</option>
+            <option>Entre 3 e 6 meses</option>
+            <option>Em mais de 6 meses</option>
+            <option>Ainda não tenho data definida</option>
           </select>
-          <select>
-            <option>* Quanto tem para investir?</option>
+
+          <select name="investimento" required>
+            <option value="" disabled selected>* Quanto tem para investir?</option>
+            <option>Até R$ 50.000</option>
+            <option>Entre R$ 50.000 e R$ 100.000</option>
+            <option>Entre R$ 100.000 e R$ 200.000</option>
+            <option>Acima de R$ 200.000</option>
+            <option>Vou buscar financiamento / sócios</option>
           </select>
-          <select>
-            <option>* Você já possui possíveis sócios?</option>
+
+          <select name="socios" required>
+            <option value="" disabled selected>* Você já possui possíveis sócios?</option>
+            <option>Sim, já conversei com possíveis sócios</option>
+            <option>Tenho pessoas em mente, mas ainda não conversei</option>
+            <option>Não, pretendo tocar o projeto sozinho(a)</option>
+            <option>Estou aberto(a) a encontrar sócios indicados pela rede</option>
           </select>
-          <button type="button">QUERO FAZER NEGÓCIO COM A UNITED</button>
+
+          <button type="submit">QUERO FAZER NEGÓCIO COM A UNITED</button>
         </form>
       </aside>
     </section>
@@ -2731,6 +2755,68 @@ document.addEventListener('click', (e) => {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeMenu();
 });
+
+// Envio do formulário para WhatsApp
+(function initLeadFormWhatsApp() {
+  var form = document.getElementById('leadForm');
+  if (!form) return;
+
+  var PHONE = '5521979310451'; // +55 21 97931-0451
+
+  // Máscara simples de telefone brasileiro enquanto o usuário digita
+  if (form.telefone) {
+    form.telefone.addEventListener('input', function () {
+      var digits = this.value.replace(/\D/g, '').slice(0, 11);
+      var ddd = digits.slice(0, 2);
+      var num = digits.slice(2);
+      var formatted = '';
+      if (ddd) {
+        formatted += '(' + ddd + ') ';
+      }
+      if (num.length <= 4) {
+        formatted += num;
+      } else if (num.length <= 8) {
+        formatted += num.slice(0, num.length - 4) + '-' + num.slice(-4);
+      } else {
+        formatted += num.slice(0, 5) + '-' + num.slice(5, 9);
+      }
+      this.value = formatted.trim();
+    });
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (typeof form.reportValidity === 'function' && !form.reportValidity()) {
+      return;
+    }
+
+    var nome = (form.nome && form.nome.value || '').trim();
+    var email = (form.email && form.email.value || '').trim();
+    var telefone = (form.telefone && form.telefone.value || '').trim();
+    var atuacao = (form.atuacao && form.atuacao.value) || '';
+    var quando = (form.quando && form.quando.value) || '';
+    var investimento = (form.investimento && form.investimento.value) || '';
+    var socios = (form.socios && form.socios.value) || '';
+
+    var linhas = [
+      'Novo lead interessado na franquia United Scala 🚀',
+      '',
+      'Nome: ' + nome,
+      'E-mail: ' + email,
+      'Telefone: ' + telefone,
+      '',
+      'Atuação hoje: ' + atuacao,
+      'Quando pretende assumir a franquia: ' + quando,
+      'Quanto tem para investir: ' + investimento,
+      'Possíveis sócios: ' + socios
+    ];
+
+    var msg = encodeURIComponent(linhas.join('\n'));
+    var url = 'https://wa.me/' + PHONE + '?text=' + msg;
+
+    window.open(url, '_blank');
+  });
+})();
 
 (function initEscritoriosGal() {
   var GAP = 24;
