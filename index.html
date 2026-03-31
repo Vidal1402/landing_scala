@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="color-scheme" content="dark">
   <title>United Scala</title>
   <link rel="icon" type="image/png" href="assets/favicon.png">
@@ -31,6 +31,10 @@
 
     * { box-sizing: border-box; }
 
+    img, video, svg {
+      max-width: 100%;
+    }
+
     .sr-only {
       position: absolute;
       width: 1px;
@@ -46,6 +50,8 @@
     html {
       font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
       scroll-behavior: smooth;
+      overflow-x: hidden;
+      max-width: 100%;
     }
 
     body {
@@ -57,7 +63,9 @@
         linear-gradient(180deg, var(--bg) 0%, var(--bg-mid) 45%, var(--bg) 100%);
       color: var(--text);
       min-height: 100vh;
+      max-width: 100%;
       overflow-x: hidden;
+      overflow-wrap: break-word;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -192,9 +200,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 180px clamp(24px, 4vw, 56px) 56px;
+      padding: 180px max(clamp(24px, 4vw, 56px), env(safe-area-inset-right, 0px)) 56px max(clamp(24px, 4vw, 56px), env(safe-area-inset-left, 0px));
       position: relative;
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: visible;
       background-image:
         linear-gradient(rgba(49, 49, 49, 0.31), rgba(0,0,0,.28)),
         url("assets/hero-bg.png");
@@ -207,7 +216,7 @@
       position: relative;
       z-index: 1;
       width: 100%;
-      max-width: 1180px;
+      max-width: min(1180px, 100%);
       margin: 0 auto;
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -469,7 +478,7 @@
       /* ===== HERO ===== */
       .hero {
         min-height: 0 !important;
-        padding: calc(env(safe-area-inset-top, 0px) + 132px) 20px 30px !important;
+        padding: calc(env(safe-area-inset-top, 0px) + 132px) max(20px, env(safe-area-inset-right, 0px)) 30px max(20px, env(safe-area-inset-left, 0px)) !important;
         text-align: center;
       }
       .hero-inner {
@@ -530,7 +539,7 @@
     }
 
     .card {
-      width: min(950px, calc(100vw - 2 * var(--page-inline)));
+      width: min(950px, 100%);
       border-radius: 18px;
       border: 1px solid var(--card-border);
       background: linear-gradient(165deg, rgba(255, 255, 255, 0.04) 0%, transparent 42%), var(--card);
@@ -804,13 +813,15 @@
     /* Seção assessoria — faixa escura contínua */
     .section-assessoria {
       width: 100%;
+      max-width: 100%;
       box-sizing: border-box;
       background: linear-gradient(180deg, #030304 0%, #0a0a0c 50%, #030304 100%);
       color: #fff;
-      padding: clamp(56px, 7.5vw, 100px) clamp(20px, 5vw, 72px);
+      padding: clamp(56px, 7.5vw, 100px) max(clamp(20px, 5vw, 72px), env(safe-area-inset-right, 0px)) clamp(56px, 7.5vw, 100px) max(clamp(20px, 5vw, 72px), env(safe-area-inset-left, 0px));
       margin: 0;
       border-top: 1px solid rgba(255, 255, 255, 0.06);
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      overflow-x: hidden;
     }
 
     .section-assessoria__inner {
@@ -880,7 +891,7 @@
       }
 
       .card {
-        width: min(950px, calc(100vw - 2 * var(--page-inline)));
+        width: min(950px, 100%);
         grid-template-columns: 1fr;
         gap: 28px;
         padding: 24px 18px 28px;
@@ -969,7 +980,7 @@
       }
 
       .section-assessoria {
-        padding: clamp(52px, 12vw, 72px) var(--page-inline) clamp(56px, 12vw, 76px);
+        padding: clamp(52px, 12vw, 72px) max(var(--page-inline), env(safe-area-inset-right, 0px)) clamp(56px, 12vw, 76px) max(var(--page-inline), env(safe-area-inset-left, 0px));
       }
 
       .section-assessoria__inner {
@@ -1005,7 +1016,7 @@
       }
 
       .section-escritorios {
-        padding: clamp(52px, 12vw, 88px) clamp(20px, 5vw, 28px);
+        padding: clamp(52px, 12vw, 88px) max(clamp(20px, 5vw, 28px), env(safe-area-inset-right, 0px)) clamp(52px, 12vw, 88px) max(clamp(20px, 5vw, 28px), env(safe-area-inset-left, 0px));
       }
 
       .section-escritorios__inner {
@@ -1086,10 +1097,13 @@
     /* Torne-se dono — faixa escura alinhada ao restante */
     .section-escritorios {
       width: 100%;
+      max-width: 100%;
       background: linear-gradient(180deg, #0a0a0d 0%, #111118 45%, #0a0a0d 100%);
       color: #fff;
-      padding: clamp(44px, 7vw, 88px) clamp(18px, 5vw, 56px);
+      padding: clamp(44px, 7vw, 88px) max(clamp(18px, 5vw, 56px), env(safe-area-inset-right, 0px)) clamp(44px, 7vw, 88px) max(clamp(18px, 5vw, 56px), env(safe-area-inset-left, 0px));
       border-top: 1px solid rgba(255, 255, 255, 0.05);
+      box-sizing: border-box;
+      overflow-x: hidden;
     }
 
     .section-escritorios__inner {
@@ -1188,20 +1202,24 @@
     }
 
     .gal-track-wrap {
+      container-type: inline-size;
+      container-name: escritorios-gal;
       overflow: hidden;
       padding: 0 60px;
+      max-width: 100%;
     }
 
     .gal-track {
       display: flex;
       gap: 24px;
       transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      max-width: none;
     }
 
     .gal-item {
       flex-shrink: 0;
-      width: 640px;
-      height: 640px;
+      width: min(640px, 90cqw);
+      height: min(640px, 90cqw);
       border-radius: 24px;
       overflow: hidden;
     }
@@ -1253,8 +1271,11 @@
     /* Entenda o nosso diferencial (referência) */
     .comparison-section {
       background: var(--bg);
-      padding: clamp(64px, 10vw, 100px) clamp(20px, 5vw, 80px);
+      padding: clamp(64px, 10vw, 100px) max(clamp(20px, 5vw, 80px), env(safe-area-inset-right, 0px)) clamp(64px, 10vw, 100px) max(clamp(20px, 5vw, 80px), env(safe-area-inset-left, 0px));
       border-top: 1px solid rgba(255, 255, 255, 0.05);
+      max-width: 100%;
+      box-sizing: border-box;
+      overflow-x: hidden;
     }
 
     .comparison-inner {
@@ -1390,8 +1411,11 @@
     /* Jornada de entregas + David */
     .section-journey-david {
       background: var(--bg);
-      padding: clamp(56px, 9vw, 96px) clamp(20px, 5vw, 48px) clamp(72px, 12vw, 120px);
+      padding: clamp(56px, 9vw, 96px) max(clamp(20px, 5vw, 48px), env(safe-area-inset-right, 0px)) clamp(72px, 12vw, 120px) max(clamp(20px, 5vw, 48px), env(safe-area-inset-left, 0px));
       border-top: 1px solid rgba(255, 255, 255, 0.05);
+      max-width: 100%;
+      box-sizing: border-box;
+      overflow-x: hidden;
     }
 
     .section-journey-david__inner {
@@ -1552,11 +1576,14 @@
     /* Comparativo United × agências */
     .section-compare {
       width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
       background: linear-gradient(165deg, #080808 0%, #121212 42%, #0c0c0c 100%);
       color: #f0f0f0;
-      padding: clamp(48px, 8vw, 96px) clamp(18px, 4vw, 48px);
+      padding: clamp(48px, 8vw, 96px) max(clamp(18px, 4vw, 48px), env(safe-area-inset-right, 0px)) clamp(48px, 8vw, 96px) max(clamp(18px, 4vw, 48px), env(safe-area-inset-left, 0px));
       position: relative;
       overflow: hidden;
+      overflow-x: hidden;
       border-top: 1px solid rgba(255, 255, 255, 0.05);
     }
 
@@ -1770,8 +1797,11 @@
     /* Services (referência index.referencia.html) — id #servicos para não colidir com #about (assessoria) */
     #servicos {
       background: var(--bg);
-      padding: 80px clamp(20px, 6vw, 100px);
+      padding: 80px max(clamp(20px, 6vw, 100px), env(safe-area-inset-right, 0px)) 80px max(clamp(20px, 6vw, 100px), env(safe-area-inset-left, 0px));
       border-top: 1px solid rgba(255, 255, 255, 0.05);
+      box-sizing: border-box;
+      max-width: 100%;
+      overflow-x: hidden;
     }
 
     #servicos .services-wrap {
@@ -1926,10 +1956,13 @@
 
     .site-footer {
       width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
       background: linear-gradient(180deg, #08080a 0%, #060607 100%);
       color: var(--text-soft);
-      padding: clamp(30px, 5vw, 44px) clamp(20px, 4vw, 48px) clamp(20px, 3.5vw, 28px);
+      padding: clamp(30px, 5vw, 44px) max(clamp(20px, 4vw, 48px), env(safe-area-inset-right, 0px)) clamp(20px, 3.5vw, 28px) max(clamp(20px, 4vw, 48px), env(safe-area-inset-left, 0px));
+      overflow-x: hidden;
     }
 
     .site-footer__inner {
@@ -2006,7 +2039,7 @@
 
     @media (max-width: 860px) {
       .comparison-section {
-        padding: 64px 20px !important;
+        padding: 64px max(20px, env(safe-area-inset-right, 0px)) 64px max(20px, env(safe-area-inset-left, 0px)) !important;
       }
 
       .comparison-heading {
@@ -2114,13 +2147,12 @@
         gap: clamp(22px, 5vw, 32px);
       }
 
-      /* Carrossel em largura de ecrã (evita sensação “apertada” dentro da coluna) */
       .section-escritorios__gallery {
-        width: 100vw;
-        max-width: 100vw;
+        width: 100%;
+        max-width: 100%;
         position: relative;
-        left: 50%;
-        transform: translateX(-50%);
+        left: auto;
+        transform: none;
         margin-top: clamp(8px, 2vw, 16px);
       }
 
@@ -2133,13 +2165,13 @@
       }
 
       .gal-item {
-        width: min(360px, calc(100vw - 56px)) !important;
-        height: min(360px, calc(100vw - 56px)) !important;
+        width: min(360px, 88cqw) !important;
+        height: min(360px, 88cqw) !important;
         border-radius: clamp(18px, 4vw, 24px);
       }
 
       #servicos {
-        padding: 48px clamp(20px, 5.5vw, 28px) !important;
+        padding: 48px max(clamp(20px, 5.5vw, 28px), env(safe-area-inset-right, 0px)) 48px max(clamp(20px, 5.5vw, 28px), env(safe-area-inset-left, 0px)) !important;
       }
 
       .services-layout {
@@ -2189,8 +2221,8 @@
       }
 
       .gal-item {
-        width: min(300px, calc(100vw - 44px)) !important;
-        height: min(300px, calc(100vw - 44px)) !important;
+        width: min(300px, 85cqw) !important;
+        height: min(300px, 85cqw) !important;
       }
 
       .gal-arrow {
