@@ -81,13 +81,19 @@
     }
 
     .navbar {
-      background: rgb(23,25,28);
+      background: radial-gradient(circle at 0 0, rgba(226,255,0,.18), transparent 55%) rgba(16, 17, 19, 0.96);
       border-radius: 42px;
-      padding: 16px 22px 16px 26px;
+      padding: 14px 20px 14px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow:
+        0 18px 45px rgba(0,0,0,0.65),
+        0 0 0 1px rgba(0,0,0,0.45);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
     }
 
     .logo-img {
@@ -115,11 +121,11 @@
       color: rgba(255,255,255,.70);
       text-decoration: none;
       font-family: 'Instrument Sans', sans-serif;
-      font-size: 16px;
+      font-size: 15px;
       letter-spacing: -0.03em;
-      padding: 8px 10px;
+      padding: 8px 12px;
       border-radius: 999px;
-      transition: color .2s ease, background .2s ease, border-color .2s ease;
+      transition: color .18s ease, background .18s ease, border-color .18s ease, transform .18s ease;
       border: 1px solid transparent;
       background: transparent;
     }
@@ -128,6 +134,14 @@
       color: #fff;
       background: rgba(255,255,255,.06);
       border-color: rgba(255,255,255,.10);
+      transform: translateY(-1px);
+    }
+
+    .nav-links a.is-active {
+      color: #000;
+      background: linear-gradient(180deg, var(--accent) 0%, #f8ff5a 100%);
+      border-color: rgba(255,255,255,0.25);
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.50);
     }
 
     .btn-primary {
@@ -1204,9 +1218,34 @@
     .gal-track-wrap {
       container-type: inline-size;
       container-name: escritorios-gal;
-      overflow: hidden;
+      overflow-x: auto;
+      overflow-y: hidden;
       padding: 0 60px;
       max-width: 100%;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+      cursor: grab;
+      scrollbar-width: thin; /* Firefox: barra mais fina */
+      /* Thumb = cor secundária, trilho escuro para contraste */
+      scrollbar-color: var(--accent2) rgba(15, 23, 42, 0.9);
+    }
+
+    .gal-track-wrap::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .gal-track-wrap::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.95);
+      border-radius: 999px;
+    }
+
+    .gal-track-wrap::-webkit-scrollbar-thumb {
+      background: linear-gradient(90deg, var(--accent2), var(--accent-lime));
+      border-radius: 999px;
+    }
+
+    .gal-track-wrap::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(90deg, var(--accent-lime), var(--accent2));
     }
 
     .gal-track {
@@ -1218,10 +1257,11 @@
 
     .gal-item {
       flex-shrink: 0;
-      width: min(640px, 90cqw);
-      height: min(640px, 90cqw);
+      width: 360px;
+      height: 360px;
       border-radius: 24px;
       overflow: hidden;
+      scroll-snap-align: center;
     }
 
     .gal-item img {
@@ -1231,42 +1271,24 @@
       display: block;
     }
 
-    .gal-arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #fff;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s, color 0.2s;
-      z-index: 10;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
+    /* Desktop: galeria ocupa toda a largura da viewport */
+    @media (min-width: 1024px) {
+      .section-escritorios__gallery {
+        width: 100vw;
+        max-width: 100vw;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+      }
 
-    .gal-arrow:hover {
-      background: var(--accent);
-      color: #000;
-    }
+      .section-escritorios__carousel {
+        margin-top: clamp(40px, 4vw, 60px);
+      }
 
-    .gal-arrow:hover svg {
-      stroke: #000;
+      .gal-track-wrap {
+        padding: 0 40px;
+      }
     }
-
-    .gal-arrow:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-    }
-
-    .gal-prev { left: 12px; }
-    .gal-next { right: 12px; }
 
     /* Entenda o nosso diferencial (referência) */
     .comparison-section {
@@ -2465,12 +2487,6 @@
                 </div>
               </div>
             </div>
-            <button type="button" class="gal-arrow gal-prev" aria-label="Imagem anterior">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M15 18l-6-6 6-6"/></svg>
-            </button>
-            <button type="button" class="gal-arrow gal-next" aria-label="Próxima imagem">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
           </div>
         </div>
       </div>
@@ -2730,6 +2746,8 @@ function closeMenu() {
   }
 }
 
+const navLinks = document.querySelectorAll('#navLinks a[href^="#"]');
+
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', (e) => {
     const href = a.getAttribute('href');
@@ -2740,8 +2758,20 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     closeMenu();
     el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     history.pushState(null, '', href);
+
+    // Estado ativo na navbar
+    if (a.closest('#navLinks')) {
+      navLinks.forEach(link => link.classList.remove('is-active'));
+      a.classList.add('is-active');
+    }
   });
 });
+
+// Marca o link correto da navbar com base no hash inicial
+if (location.hash) {
+  const current = document.querySelector('#navLinks a[href="' + location.hash + '"]');
+  if (current) current.classList.add('is-active');
+}
 
 document.addEventListener('click', (e) => {
   const nav = document.getElementById('navLinks');
@@ -2819,50 +2849,40 @@ document.addEventListener('keydown', (e) => {
 })();
 
 (function initEscritoriosGal() {
-  var GAP = 24;
-  var galIndex = 0;
   var track = document.getElementById('escritoriosGalTrack');
   var wrap = track && track.parentElement;
-  var root = document.querySelector('.section-escritorios__carousel');
-  var prevBtn = root && root.querySelector('.gal-prev');
-  var nextBtn = root && root.querySelector('.gal-next');
-  if (!track || !wrap || !prevBtn || !nextBtn) return;
+  if (!track || !wrap) return;
 
-  function metrics() {
-    var items = track.querySelectorAll('.gal-item');
-    if (!items.length) return null;
-    var itemW = items[0].offsetWidth + GAP;
-    if (itemW <= GAP) return null;
-    var visible = Math.max(1, Math.floor((wrap.clientWidth + GAP) / itemW));
-    var maxIndex = Math.max(0, items.length - visible);
-    return { itemW: itemW, maxIndex: maxIndex };
+  var offset = 0;
+  var speed = 0.85; // pixels por frame aproximado — “carro passando mais rápido”
+  var lastTime = null;
+
+  function maxOffset() {
+    var max = track.scrollWidth - wrap.clientWidth;
+    return max > 0 ? max : 0;
   }
 
-  function applyTransform() {
-    var m = metrics();
-    if (!m) return;
-    galIndex = Math.min(galIndex, m.maxIndex);
-    track.style.transform = 'translateX(' + (-galIndex * m.itemW) + 'px)';
+  function applyOffset() {
+    track.style.transform = 'translateX(' + (-offset) + 'px)';
   }
 
-  function move(dir) {
-    var m = metrics();
-    if (!m) return;
-    galIndex = Math.max(0, Math.min(galIndex + +dir, m.maxIndex));
-    track.style.transform = 'translateX(' + (-galIndex * m.itemW) + 'px)';
+  function loop(timestamp) {
+    if (lastTime == null) lastTime = timestamp;
+    var dt = timestamp - lastTime;
+    lastTime = timestamp;
+
+    var max = maxOffset();
+    if (max > 0) {
+      offset += speed * (dt / 16.67); // normaliza para ~60fps
+      if (offset > max) {
+        offset = 0;
+      }
+      applyOffset();
+    }
+    window.requestAnimationFrame(loop);
   }
 
-  prevBtn.addEventListener('click', function () { move(-1); });
-  nextBtn.addEventListener('click', function () { move(1); });
-  window.addEventListener('resize', applyTransform);
-  if (typeof ResizeObserver !== 'undefined') {
-    var ro = new ResizeObserver(applyTransform);
-    ro.observe(wrap);
-  }
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(applyTransform);
-  }
-  applyTransform();
+  window.requestAnimationFrame(loop);
 })();
   </script>
 </body>
